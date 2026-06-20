@@ -1,0 +1,75 @@
+[
+  {
+    "property": "mod.gvr-rail-selected-ring.tile_tint",
+    "label": "Tile background tint (all tabs in collapsed rail)",
+    "type": "checkbox",
+    "defaultValue": true
+  },
+  {
+    "property": "mod.gvr-rail-selected-ring.tile_opacity",
+    "label": "Tile tint opacity",
+    "type": "string",
+    "defaultValue": "100%",
+    "placeholder": "e.g. 50% or 100%"
+  },
+  {
+    "property": "mod.gvr-rail-selected-ring.tile_container_color",
+    "label": "Container tabs use identity color for tile tint",
+    "type": "checkbox",
+    "defaultValue": false
+  },
+  {
+    "property": "mod.gvr-rail-selected-ring.hover_match_style",
+    "label": "Tab hover matches idle style (same tint, caps, opacity)",
+    "type": "checkbox",
+    "defaultValue": false
+  },
+  {
+    "property": "mod.gvr-rail-selected-ring.cap_top",
+    "label": "Selected — top cap",
+    "type": "checkbox",
+    "defaultValue": true
+  },
+  {
+    "property": "mod.gvr-rail-selected-ring.cap_bottom",
+    "label": "Selected — bottom cap",
+    "type": "checkbox",
+    "defaultValue": true
+  },
+  {
+    "property": "mod.gvr-rail-selected-ring.cap_left",
+    "label": "Selected — left cap",
+    "type": "checkbox",
+    "defaultValue": true
+  },
+  {
+    "property": "mod.gvr-rail-selected-ring.cap_right",
+    "label": "Selected — right cap (container: native stripe on left sidebar)",
+    "type": "checkbox",
+    "defaultValue": true
+  },
+  {
+    "property": "mod.gvr-rail-selected-ring.cap_unsel_top",
+    "label": "Unselected — top cap",
+    "type": "checkbox",
+    "defaultValue": false
+  },
+  {
+    "property": "mod.gvr-rail-selected-ring.cap_unsel_bottom",
+    "label": "Unselected — bottom cap",
+    "type": "checkbox",
+    "defaultValue": false
+  },
+  {
+    "property": "mod.gvr-rail-selected-ring.cap_unsel_left",
+    "label": "Unselected — left cap",
+    "type": "checkbox",
+    "defaultValue": false
+  },
+  {
+    "property": "mod.gvr-rail-selected-ring.cap_unsel_right",
+    "label": "Unselected — right cap (container: native stripe on left sidebar)",
+    "type": "checkbox",
+    "defaultValue": false
+  }
+]

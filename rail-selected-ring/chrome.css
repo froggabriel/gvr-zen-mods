@@ -1,47 +1,409 @@
-/* rail-selected-ring v1.0.0
-   Collapsed rail: subtle tile backgrounds + selected inset ring.
-   Container tabs use --identity-icon-color for the ring (matches stripe). */
+/* rail-selected-ring v1.3.3
+   Selected + unselected caps are independent per edge. */
+
+#navigator-toolbox {
+  --rail-stripe-width: 3px;
+  --rail-tile-opacity: var(--mod-gvr-rail-selected-ring-tile_opacity, 100%);
+  --rail-tile-bg-full: var(--zen-toolbar-element-bg);
+  --rail-tile-hover-full: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.2));
+  --rail-tile-selected-full: light-dark(rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.16));
+  --rail-tile-bg: color-mix(in srgb, var(--rail-tile-bg-full) var(--rail-tile-opacity), transparent);
+  --rail-tile-hover-bg: color-mix(in srgb, var(--rail-tile-hover-full) var(--rail-tile-opacity), transparent);
+  --rail-selected-tile: color-mix(in srgb, var(--rail-tile-selected-full) var(--rail-tile-opacity), transparent);
+  --rail-stripe-neutral: light-dark(rgba(0, 0, 0, 0.38), rgba(255, 255, 255, 0.55));
+  --rail-cap-s-top: var(--rail-stripe-width);
+  --rail-cap-s-bottom: var(--rail-stripe-width);
+  --rail-cap-s-left: var(--rail-stripe-width);
+  --rail-cap-s-right: var(--rail-stripe-width);
+  --rail-cap-s-side-height: calc(100% - var(--rail-cap-s-top) - var(--rail-cap-s-bottom));
+  --rail-cap-u-top: 0px;
+  --rail-cap-u-bottom: 0px;
+  --rail-cap-u-left: 0px;
+  --rail-cap-u-right: 0px;
+  --rail-cap-u-side-height: calc(100% - var(--rail-cap-u-top) - var(--rail-cap-u-bottom));
+}
+
+@media (-moz-pref("mod.gvr-rail-selected-ring.cap_top", false)) {
+  #navigator-toolbox { --rail-cap-s-top: 0px; }
+}
+@media (-moz-pref("mod.gvr-rail-selected-ring.cap_bottom", false)) {
+  #navigator-toolbox { --rail-cap-s-bottom: 0px; }
+}
+@media (-moz-pref("mod.gvr-rail-selected-ring.cap_left", false)) {
+  #navigator-toolbox { --rail-cap-s-left: 0px; }
+}
+@media (-moz-pref("mod.gvr-rail-selected-ring.cap_right", false)) {
+  #navigator-toolbox { --rail-cap-s-right: 0px; }
+}
+
+@media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_top")) {
+  #navigator-toolbox { --rail-cap-u-top: var(--rail-stripe-width); }
+}
+@media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_bottom")) {
+  #navigator-toolbox { --rail-cap-u-bottom: var(--rail-stripe-width); }
+}
+@media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_left")) {
+  #navigator-toolbox { --rail-cap-u-left: var(--rail-stripe-width); }
+}
+@media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_right")) {
+  #navigator-toolbox { --rail-cap-u-right: var(--rail-stripe-width); }
+}
+
+@media (-moz-pref("mod.gvr-rail-selected-ring.tile_tint", false)) {
+  #navigator-toolbox {
+    --rail-tile-bg: transparent;
+    --rail-tile-hover-bg: transparent;
+    --rail-selected-tile: transparent;
+  }
+}
+
+@media (-moz-pref("mod.gvr-rail-selected-ring.tile_container_color")) {
+  @media not (-moz-pref("mod.gvr-rail-selected-ring.tile_tint", false)) {
+    #navigator-toolbox #zen-tabs-wrapper
+    tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background {
+      --rail-tile-bg-full: color-mix(in srgb, var(--identity-icon-color, currentColor) 10%, transparent);
+      --rail-tile-hover-full: color-mix(in srgb, var(--identity-icon-color, currentColor) 18%, transparent);
+      --rail-tile-selected-full: color-mix(in srgb, var(--identity-icon-color, currentColor) 14%, transparent);
+      --rail-tile-bg: color-mix(in srgb, var(--rail-tile-bg-full) var(--rail-tile-opacity), transparent);
+      --rail-tile-hover-bg: color-mix(in srgb, var(--rail-tile-hover-full) var(--rail-tile-opacity), transparent);
+      --rail-selected-tile: color-mix(in srgb, var(--rail-tile-selected-full) var(--rail-tile-opacity), transparent);
+    }
+  }
+}
 
 #navigator-toolbox #zen-tabs-wrapper
 tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background {
-  transition: background-color var(--transition-duration) ease, box-shadow var(--transition-duration) ease !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+  transition: background-color var(--transition-duration) ease !important;
 }
 
 #navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"]):not(:hover) .tab-background {
   animation: none !important;
-  background-color: var(--zen-toolbar-element-bg) !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
+  background-color: var(--rail-tile-bg) !important;
+  border: none !important;
 }
 
 #navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
-tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):hover:not([visuallyselected], [multiselected="true"]) .tab-background {
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"]) .tab-background {
   animation: none !important;
-  background-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.2)) !important;
-  box-shadow: none !important;
+  background-color: var(--rail-selected-tile) !important;
 }
 
-/* Non-container selected: neutral inset ring, same tile fill as others */
+/* Selected — container top/bottom */
 #navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
-tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"]) .tab-background {
-  animation: none !important;
-  background-color: var(--zen-toolbar-element-bg) !important;
-  border-color: transparent !important;
-  box-shadow: inset 0 0 0 1.5px light-dark(rgba(0, 0, 0, 0.28), rgba(255, 255, 255, 0.42)) !important;
+tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
+.tab-background::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: var(--rail-cap-s-top) !important;
+  background: var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor)) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
 }
 
-/* Container selected: ring matches identity / stripe color */
 #navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
-tab[usercontextid]:is([visuallyselected], [multiselected="true"]) .tab-background {
-  animation: none !important;
-  background-color: var(--zen-toolbar-element-bg) !important;
-  border-color: transparent !important;
-  box-shadow: inset 0 0 0 1.5px var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor)) !important;
+tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
+.tab-background::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: var(--rail-cap-s-bottom) !important;
+  background: var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor)) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+/* Selected — container painted side */
+#navigator-toolbox:not([zen-right-side="true"]):not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
+.tab-background {
+  background-image: linear-gradient(var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor)), var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor))) !important;
+  background-size: var(--rail-cap-s-left) var(--rail-cap-s-side-height) !important;
+  background-position: left center !important;
+  background-repeat: no-repeat !important;
+  border: none !important;
+}
+
+#navigator-toolbox[zen-right-side="true"]:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
+.tab-background {
+  background-image: linear-gradient(var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor)), var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor))) !important;
+  background-size: var(--rail-cap-s-right) var(--rail-cap-s-side-height) !important;
+  background-position: right center !important;
+  background-repeat: no-repeat !important;
+  border: none !important;
+}
+
+@media (-moz-pref("mod.gvr-rail-selected-ring.cap_right", false)) {
+  #navigator-toolbox:not([zen-right-side="true"]):not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+  #zen-tabs-wrapper
+  tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
+  .tab-context-line {
+    display: none !important;
+  }
+}
+
+@media (-moz-pref("mod.gvr-rail-selected-ring.cap_left", false)) {
+  #navigator-toolbox[zen-right-side="true"]:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+  #zen-tabs-wrapper
+  tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
+  .tab-context-line {
+    display: none !important;
+  }
+}
+
+/* Selected — non-container sides + tile */
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
+.tab-background {
+  clip-path: none !important;
+  width: calc(var(--collapsed-tab-bar-width) - 5px - 2 * var(--tab-block-margin)) !important;
+  max-width: calc(var(--collapsed-tab-bar-width) - 5px - 2 * var(--tab-block-margin)) !important;
+  margin-inline: var(--tab-block-margin) !important;
+  background-image:
+    linear-gradient(var(--rail-stripe-neutral), var(--rail-stripe-neutral)),
+    linear-gradient(var(--rail-stripe-neutral), var(--rail-stripe-neutral)) !important;
+  background-size:
+    var(--rail-cap-s-left) var(--rail-cap-s-side-height),
+    var(--rail-cap-s-right) var(--rail-cap-s-side-height) !important;
+  background-position: left center, right center !important;
+  background-repeat: no-repeat !important;
+}
+
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
+.tab-background::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: var(--rail-cap-s-top) !important;
+  background: var(--rail-stripe-neutral) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
+.tab-background::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: var(--rail-cap-s-bottom) !important;
+  background: var(--rail-stripe-neutral) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+/* Unselected — container top/bottom (height 0 when pref off) */
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+.tab-background::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: var(--rail-cap-u-top) !important;
+  background: var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor)) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+.tab-background::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: var(--rail-cap-u-bottom) !important;
+  background: var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor)) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+/* Unselected — container painted side */
+#navigator-toolbox:not([zen-right-side="true"]):not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+.tab-background {
+  background-image: linear-gradient(var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor)), var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor))) !important;
+  background-size: var(--rail-cap-u-left) var(--rail-cap-u-side-height) !important;
+  background-position: left center !important;
+  background-repeat: no-repeat !important;
+}
+
+#navigator-toolbox[zen-right-side="true"]:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+.tab-background {
+  background-image: linear-gradient(var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor)), var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor))) !important;
+  background-size: var(--rail-cap-u-right) var(--rail-cap-u-side-height) !important;
+  background-position: right center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Unselected container: hide native stripe when any unsel cap on but unsel right off */
+@media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_right", false)) {
+  @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_top")) {
+    #navigator-toolbox:not([zen-right-side="true"]):not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+    #zen-tabs-wrapper
+    tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+    .tab-context-line {
+      display: none !important;
+    }
+  }
+  @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_bottom")) {
+    #navigator-toolbox:not([zen-right-side="true"]):not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+    #zen-tabs-wrapper
+    tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+    .tab-context-line {
+      display: none !important;
+    }
+  }
+  @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_left")) {
+    #navigator-toolbox:not([zen-right-side="true"]):not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+    #zen-tabs-wrapper
+    tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+    .tab-context-line {
+      display: none !important;
+    }
+  }
+}
+
+@media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_left", false)) {
+  @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_top")) {
+    #navigator-toolbox[zen-right-side="true"]:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+    #zen-tabs-wrapper
+    tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+    .tab-context-line {
+      display: none !important;
+    }
+  }
+  @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_bottom")) {
+    #navigator-toolbox[zen-right-side="true"]:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+    #zen-tabs-wrapper
+    tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+    .tab-context-line {
+      display: none !important;
+    }
+  }
+  @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_right")) {
+    #navigator-toolbox[zen-right-side="true"]:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+    #zen-tabs-wrapper
+    tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+    .tab-context-line {
+      display: none !important;
+    }
+  }
+}
+
+/* Unselected — non-container (side caps need square tile) */
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+.tab-background {
+  background-image:
+    linear-gradient(var(--rail-stripe-neutral), var(--rail-stripe-neutral)),
+    linear-gradient(var(--rail-stripe-neutral), var(--rail-stripe-neutral)) !important;
+  background-size:
+    var(--rail-cap-u-left) var(--rail-cap-u-side-height),
+    var(--rail-cap-u-right) var(--rail-cap-u-side-height) !important;
+  background-position: left center, right center !important;
+  background-repeat: no-repeat !important;
+}
+
+@media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_left")) {
+  #navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+  #zen-tabs-wrapper
+  tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+  .tab-background {
+    clip-path: none !important;
+    width: calc(var(--collapsed-tab-bar-width) - 5px - 2 * var(--tab-block-margin)) !important;
+    max-width: calc(var(--collapsed-tab-bar-width) - 5px - 2 * var(--tab-block-margin)) !important;
+    margin-inline: var(--tab-block-margin) !important;
+  }
+}
+
+@media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_right")) {
+  #navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+  #zen-tabs-wrapper
+  tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+  .tab-background {
+    clip-path: none !important;
+    width: calc(var(--collapsed-tab-bar-width) - 5px - 2 * var(--tab-block-margin)) !important;
+    max-width: calc(var(--collapsed-tab-bar-width) - 5px - 2 * var(--tab-block-margin)) !important;
+    margin-inline: var(--tab-block-margin) !important;
+  }
+}
+
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+.tab-background::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: var(--rail-cap-u-top) !important;
+  background: var(--rail-stripe-neutral) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+.tab-background::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: var(--rail-cap-u-bottom) !important;
+  background: var(--rail-stripe-neutral) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+@media not (-moz-pref("mod.gvr-rail-selected-ring.hover_match_style")) {
+#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#zen-tabs-wrapper
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background::before,
+#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#zen-tabs-wrapper
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background::after,
+#navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
+#zen-tabs-wrapper
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background::before,
+#navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
+#zen-tabs-wrapper
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background::after {
+  content: none !important;
 }
 
 #navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
@@ -50,5 +412,314 @@ tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-back
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
 #zen-tabs-wrapper
 tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background {
-  box-shadow: none;
+  background-image: none !important;
+  border: none !important;
+}
+}
+
+@media (-moz-pref("mod.gvr-rail-selected-ring.hover_match_style")) {
+  /* Sidebar :hover keeps full idle rail styling; tab :hover uses idle tint not hover tint. */
+#navigator-toolbox:not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+#zen-tabs-wrapper
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"]) .tab-background {
+  animation: none !important;
+  background-color: var(--rail-tile-bg) !important;
+  border: none !important;
+}
+
+#navigator-toolbox:not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+#zen-tabs-wrapper
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"]) .tab-background {
+  animation: none !important;
+  background-color: var(--rail-selected-tile) !important;
+}
+
+/* Selected — container top/bottom */
+#navigator-toolbox:not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+#zen-tabs-wrapper
+tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
+.tab-background::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: var(--rail-cap-s-top) !important;
+  background: var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor)) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+#navigator-toolbox:not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+#zen-tabs-wrapper
+tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
+.tab-background::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: var(--rail-cap-s-bottom) !important;
+  background: var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor)) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+/* Selected — container painted side */
+#navigator-toolbox:not([zen-right-side="true"]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+#zen-tabs-wrapper
+tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
+.tab-background {
+  background-image: linear-gradient(var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor)), var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor))) !important;
+  background-size: var(--rail-cap-s-left) var(--rail-cap-s-side-height) !important;
+  background-position: left center !important;
+  background-repeat: no-repeat !important;
+  border: none !important;
+}
+
+#navigator-toolbox[zen-right-side="true"]:not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+#zen-tabs-wrapper
+tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
+.tab-background {
+  background-image: linear-gradient(var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor)), var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor))) !important;
+  background-size: var(--rail-cap-s-right) var(--rail-cap-s-side-height) !important;
+  background-position: right center !important;
+  background-repeat: no-repeat !important;
+  border: none !important;
+}
+
+@media (-moz-pref("mod.gvr-rail-selected-ring.cap_right", false)) {
+  #navigator-toolbox:not([zen-right-side="true"]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+  #zen-tabs-wrapper
+  tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
+  .tab-context-line {
+    display: none !important;
+  }
+}
+
+@media (-moz-pref("mod.gvr-rail-selected-ring.cap_left", false)) {
+  #navigator-toolbox[zen-right-side="true"]:not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+  #zen-tabs-wrapper
+  tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
+  .tab-context-line {
+    display: none !important;
+  }
+}
+
+/* Selected — non-container sides + tile */
+#navigator-toolbox:not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+#zen-tabs-wrapper
+tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
+.tab-background {
+  clip-path: none !important;
+  background-image:
+    linear-gradient(var(--rail-stripe-neutral), var(--rail-stripe-neutral)),
+    linear-gradient(var(--rail-stripe-neutral), var(--rail-stripe-neutral)) !important;
+  background-size:
+    var(--rail-cap-s-left) var(--rail-cap-s-side-height),
+    var(--rail-cap-s-right) var(--rail-cap-s-side-height) !important;
+  background-position: left center, right center !important;
+  background-repeat: no-repeat !important;
+}
+
+#navigator-toolbox:not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+#zen-tabs-wrapper
+tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
+.tab-background::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: var(--rail-cap-s-top) !important;
+  background: var(--rail-stripe-neutral) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+#navigator-toolbox:not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+#zen-tabs-wrapper
+tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
+.tab-background::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: var(--rail-cap-s-bottom) !important;
+  background: var(--rail-stripe-neutral) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+/* Unselected — container top/bottom (height 0 when pref off) */
+#navigator-toolbox:not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+#zen-tabs-wrapper
+tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+.tab-background::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: var(--rail-cap-u-top) !important;
+  background: var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor)) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+#navigator-toolbox:not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+#zen-tabs-wrapper
+tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+.tab-background::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: var(--rail-cap-u-bottom) !important;
+  background: var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor)) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+/* Unselected — container painted side */
+#navigator-toolbox:not([zen-right-side="true"]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+#zen-tabs-wrapper
+tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+.tab-background {
+  background-image: linear-gradient(var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor)), var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor))) !important;
+  background-size: var(--rail-cap-u-left) var(--rail-cap-u-side-height) !important;
+  background-position: left center !important;
+  background-repeat: no-repeat !important;
+}
+
+#navigator-toolbox[zen-right-side="true"]:not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+#zen-tabs-wrapper
+tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+.tab-background {
+  background-image: linear-gradient(var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor)), var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor))) !important;
+  background-size: var(--rail-cap-u-right) var(--rail-cap-u-side-height) !important;
+  background-position: right center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Unselected container: hide native stripe when any unsel cap on but unsel right off */
+@media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_right", false)) {
+  @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_top")) {
+    #navigator-toolbox:not([zen-right-side="true"]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+    #zen-tabs-wrapper
+    tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+    .tab-context-line {
+      display: none !important;
+    }
+  }
+  @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_bottom")) {
+    #navigator-toolbox:not([zen-right-side="true"]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+    #zen-tabs-wrapper
+    tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+    .tab-context-line {
+      display: none !important;
+    }
+  }
+  @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_left")) {
+    #navigator-toolbox:not([zen-right-side="true"]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+    #zen-tabs-wrapper
+    tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+    .tab-context-line {
+      display: none !important;
+    }
+  }
+}
+
+@media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_left", false)) {
+  @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_top")) {
+    #navigator-toolbox[zen-right-side="true"]:not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+    #zen-tabs-wrapper
+    tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+    .tab-context-line {
+      display: none !important;
+    }
+  }
+  @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_bottom")) {
+    #navigator-toolbox[zen-right-side="true"]:not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+    #zen-tabs-wrapper
+    tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+    .tab-context-line {
+      display: none !important;
+    }
+  }
+  @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_right")) {
+    #navigator-toolbox[zen-right-side="true"]:not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+    #zen-tabs-wrapper
+    tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+    .tab-context-line {
+      display: none !important;
+    }
+  }
+}
+
+/* Unselected — non-container (side caps need square tile) */
+#navigator-toolbox:not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+#zen-tabs-wrapper
+tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+.tab-background {
+  background-image:
+    linear-gradient(var(--rail-stripe-neutral), var(--rail-stripe-neutral)),
+    linear-gradient(var(--rail-stripe-neutral), var(--rail-stripe-neutral)) !important;
+  background-size:
+    var(--rail-cap-u-left) var(--rail-cap-u-side-height),
+    var(--rail-cap-u-right) var(--rail-cap-u-side-height) !important;
+  background-position: left center, right center !important;
+  background-repeat: no-repeat !important;
+}
+
+@media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_left")) {
+  #navigator-toolbox:not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+  #zen-tabs-wrapper
+  tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+  .tab-background {
+    clip-path: none !important;
+  }
+}
+
+@media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_right")) {
+  #navigator-toolbox:not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+  #zen-tabs-wrapper
+  tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+  .tab-background {
+    clip-path: none !important;
+  }
+}
+
+#navigator-toolbox:not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+#zen-tabs-wrapper
+tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+.tab-background::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: var(--rail-cap-u-top) !important;
+  background: var(--rail-stripe-neutral) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+#navigator-toolbox:not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))):not([has-popup-menu="true"]):not([movingtab]):not([flash-popup])
+#zen-tabs-wrapper
+tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
+.tab-background::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: var(--rail-cap-u-bottom) !important;
+  background: var(--rail-stripe-neutral) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
 }

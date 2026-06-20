@@ -1,6 +1,6 @@
 # rail-selected-ring — Agent Notes
 
-**Version:** 1.0.0 · **Status:** Working
+**Version:** 1.0.1 · **Status:** Working (3-edge ring on container tabs; stripe = 4th edge)
 
 ## Goal
 
