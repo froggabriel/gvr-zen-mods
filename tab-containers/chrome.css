@@ -1,4 +1,4 @@
-/* tab-containers v1.0.54 — folder indent: margin + narrower width (right edge aligns) */
+/* tab-containers v1.0.55 — collapsed rail: stronger selected tile vs toolbar-element-bg */
 
 /* ponytail: shared transition for collapsed↔expanded bg handoff */
 #navigator-toolbox #zen-tabs-wrapper
@@ -208,8 +208,9 @@ tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):hover:not
 #zen-tabs-wrapper
 tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"]) .tab-background {
   animation: none !important;
-  background-color: light-dark(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.2)) !important;
-  border-color: transparent !important;
+  background-color: light-dark(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.42)) !important;
+  border-color: light-dark(rgba(0, 0, 0, 0.14), rgba(255, 255, 255, 0.55)) !important;
+  box-shadow: inset 0 0 0 1px light-dark(rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.22)) !important;
 }
 
 /* Expanded: drop hold bg animation — Zen owns selected/hover colors (not background: revert) */

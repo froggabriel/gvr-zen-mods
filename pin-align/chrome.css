@@ -1,11 +1,11 @@
-/* pin-align v1.0.3
+/* pin-align v1.0.4
 
    Keeps pinned folder-tab icons aligned with other pinned tabs when the
    workspace pinned section is collapsed. Without labels, folder tabs should
    sit at translateX(0) — not the -14px offset expand-on-hover uses for
    folder chrome. Blocks hover from adding margin-inline-start. */
 
-/* Workspace expanded, folder labels visible */
+/* Workspace pins expanded: folder hierarchy indent (tab-containers reads this) */
 zen-workspace:not([collapsedpinnedtabs])
 vbox.zen-workspace-pinned-tabs-section
 zen-folder .tabbrowser-tab,
@@ -13,6 +13,12 @@ zen-workspace:not([collapsedpinnedtabs])
 vbox.zen-workspace-normal-tabs-section
 zen-folder .tabbrowser-tab {
   --zen-folder-indent: 14px !important;
+}
+
+/* Workspace pins collapsed: flat rail — no folder indent on sidebar hover either */
+zen-workspace[collapsedpinnedtabs]
+vbox.zen-workspace-pinned-tabs-section {
+  --zen-folder-indent: 0px !important;
 }
 
 /* Workspace pins collapsed: align with top-level pinned tabs, no hover shift */
