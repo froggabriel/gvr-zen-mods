@@ -6,14 +6,17 @@ Small CSS utility mods for [Zen Browser](https://zen-browser.app).
 
 | Mod | Version | Description |
 |-----|---------|-------------|
-| [pinned-in-rail](pinned-in-rail/) | 1.0.2 | Keeps loaded pinned tabs visible in the rail when the workspace section is collapsed |
-| [pin-align](pin-align/) | 1.0.2 | Fixes pinned folder-tab icon alignment in the collapsed rail |
+| [pinned-in-rail](pinned-in-rail/) | 1.0.1 | Keeps loaded pinned tabs visible in the rail when the workspace section is collapsed |
+| [pin-align](pin-align/) | 1.0.4 | Fixes pinned folder-tab icon alignment in the collapsed rail |
 | [active-first](active-first/) | 1.0.0 | Active tabs on top in rail; inactive hidden when expanded |
-| [essentials-bottom](essentials-bottom/) | 1.0.3 | Moves essentials tabs to the bottom of the sidebar |
-| [tab-containers](tab-containers/) | 1.0.5 | Tile backgrounds in collapsed rail; collapse hold via CSS animation |
+| [essentials-bottom](essentials-bottom/) | 1.0.8 | Moves essentials tabs to the bottom of the sidebar |
+| [tab-containers](tab-containers/) | 1.0.58 | Tile geometry in collapsed rail; instant collapse |
+| [rail-selected-ring](rail-selected-ring/) | 1.3.3 | Collapsed-rail tile tint and selected cap ring |
 | [clean-sidebar-header](clean-sidebar-header/) | 1.0.0 | Hides the title bar in extension sidebars |
 
-`pinned-in-rail`, `pin-align`, `active-first`, `tab-containers`, and `essentials-bottom` are companions for `zen-sidebar-expand-on-hover`.
+Companions for **`zen-sidebar-expand-on-hover`** (external fork). Recommended ship order:
+
+`expand-on-hover` → `pinned-in-rail` → `pin-align` → `essentials-bottom` → `tab-containers` → `rail-selected-ring`
 
 ## Install
 

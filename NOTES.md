@@ -12,16 +12,16 @@ CSS utility mods for [Zen Browser](https://zen-browser.app) — **Zen Mods = CSS
 
 Most GVR mods are **companions** that fix rail UX on top of that model.
 
-## Recommended user stack (order matters in zen-themes.css)
+## Recommended ship stack (order matters in zen-themes.css)
 
 1. expand-on-hover (external)
 2. pinned-in-rail
 3. pin-align
-4. active-first
-5. essentials-bottom
-6. tab-containers (last — overrides expand-on-hover clip-path in rail)
+4. essentials-bottom
+5. tab-containers
+6. rail-selected-ring (last)
 
-clean-sidebar-header is independent.
+Optional: `active-first`, `clean-sidebar-header` (independent).
 
 ## Cross-cutting rules (do not forget)
 
@@ -42,35 +42,24 @@ python3 install.py tab-containers   # one mod
 
 Restart Zen after install.
 
-**Profile:** `install.py` targets `Default (release)` only. Override: `ZEN_PROFILE=substring python3 install.py …`. Do not install to every profile under `Profiles/*` — orphan profiles (e.g. old `Default Profile`) may have unrelated tooling (Sine, etc.).
+**Profile:** `install.py` targets `Default (release)` only. Override: `ZEN_PROFILE=substring python3 install.py …`.
 
 ## Per-mod deep dives
 
-Each mod directory has its own `NOTES.md`.
+Each mod directory has its own `NOTES.md`. Start with `tab-containers/NOTES.md` for rail work.
+
+**Manual QA:** [`TESTING.md`](TESTING.md) — P0/P1 checklist for the ship stack (run before merge).
+
+## Git history
+
+- **`main`** / **`main-pre-squash-20260620`**: full 85-commit history at `014511a` (`ship` tag).
+- **`squash-work-v3`**: 12-commit rewrite (11 feature + docs); not merged to `main` yet.
+- Golden discovery commits tagged on backup branch — see `tab-containers/NOTES.md`.
 
 ## TODO (unfixed)
 
-- **tab-containers:** **v1.0.51** instant collapse (snap + hide labels). #2 stripe-hold closed by user preference.
 - **Folder rename + expand-on-hover:** Create folder → typing name → mouse leaves sidebar → sidebar collapses while input active.
-
-## Learnings (2026-06 — pinned rail session)
-
-**Ship baseline:** `tab-containers` **v1.0.49** = v1.0.46 pinned layout/hold + immediate pinned bg cap. **Fixed:** hover narrow (#1), label hold, icon in tile. **Open:** stripe snap (#2).
-
-**Golden commits:** collapsed visuals = `4fd2ba0` (tc v1.0.5 static). Hold primary = eoh `1688c30`. tc companion = `435b945` (width/content/labels — not stripe layer).
-
-**Stripes** = native `.tab-context-line` on `.tab-background`. Pinned stripe snap = tc immediate pinned bg cap, not label hold.
-
-**#1 fix (v1.0.46):** row flex is inside `zen-folder .tab-group-container`, not outer pinned vbox. Essentials ≠ pinned.
-
-**#2 dead ends:** tc global + scoped cap delay (v1.0.47–48, v1.0.50); eoh folder indent exempt (v1.0.12). **Tradeoff confirmed:** immediate cap = edge ✓ snap ✗; delayed cap = edge ✗ layout shift ✗. JS `rail-pending` only path left.
-
-Full log: `tab-containers/NOTES.md`.
-
-## Unbuilt future work (not in repo)
-
-- **`gvr-sidebar-rail`** — opinionated clean-slate mod spec (flat rail, essentials linear/mosaic). Not implemented.
 
 ## User UX target (context)
 
-Arc/Edge-style **icon dock** in collapsed rail: essentials at bottom, workspace tabs with tile backgrounds, pins visible when section collapsed, full sidebar on hover. Community GitHub threads (#3522, #3696, #3040, PR #1757) describe the same pain; this stack is a mod-based answer.
+Arc/Edge-style **icon dock** in collapsed rail: essentials at bottom, workspace tabs with tile backgrounds, pins visible when section collapsed, full sidebar on hover. This stack is a mod-based answer to community sidebar rail threads.
