@@ -1,4 +1,4 @@
-/* tab-containers v1.0.25 — revert v1.0.23/24 pinned hold; restore v1.0.22 collapsed cap */
+/* tab-containers v1.0.49 — revert v1.0.47/48 cap delay; restore immediate pinned bg cap (v1.0.46) */
 
 /* ponytail: shared transition for collapsed↔expanded bg handoff */
 #navigator-toolbox #zen-tabs-wrapper
@@ -40,6 +40,51 @@ vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section {
   max-width: none !important;
   align-items: stretch !important;
   align-self: stretch !important;
+}
+
+/* ponytail: folder pinned tabs — row .tab-group-container caused half-width squares on hover */
+#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#zen-tabs-wrapper
+vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
+zen-folder .tab-group-container,
+#navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
+#zen-tabs-wrapper
+vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
+zen-folder .tab-group-container {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  align-items: stretch !important;
+}
+
+#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#zen-tabs-wrapper
+vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
+zen-folder .tab-group-container
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]),
+#navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
+#zen-tabs-wrapper
+vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
+zen-folder .tab-group-container
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  flex: 0 0 auto !important;
+}
+
+#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#zen-tabs-wrapper
+vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
+zen-folder .tab-group-container
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background,
+#navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
+#zen-tabs-wrapper
+vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
+zen-folder .tab-group-container
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background {
+  width: -moz-available !important;
+  max-width: none !important;
 }
 
 #navigator-toolbox:not([zen-right-side="true"]):is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
@@ -99,7 +144,7 @@ zen-folder .tab-group-container tab .tab-background {
   margin-inline: var(--tab-block-margin) !important;
 }
 
-/* ponytail: pinned tile cap — immediate static (v1.0.18); stripe needs capped bg + overflow */
+/* ponytail: pinned tile cap — immediate static; stripe needs capped bg + overflow */
 #navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
@@ -209,11 +254,23 @@ tab:not([zen-essential], [zen-glance-tab="true"]) .tab-label-container {
   display: flex !important;
 }
 
-/* Hold: center favicons after delay */
+/* Hold: center favicons after delay — normal tabs only */
 #navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
-tab:not([zen-essential], [zen-glance-tab="true"]) .tab-content {
+vbox.zen-workspace-normal-tabs-section
+tab:not([zen-essential], [zen-glance-tab="true"]) .tab-content,
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([pinned], [zen-essential], [zen-glance-tab="true"]) .tab-content {
   animation: tc-rail-content 0ms linear var(--transition-delay-fast, 500ms) forwards;
+}
+
+/* ponytail: pinned hold — bg cap is immediate but tab width delays; center content in cap width not full tab */
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
+tab:not([zen-essential], [zen-glance-tab="true"]) .tab-content {
+  animation: tc-rail-pinned-content 0ms linear var(--transition-delay-fast, 500ms) both forwards;
 }
 
 #navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
@@ -234,6 +291,30 @@ tab:not([zen-essential], [zen-glance-tab="true"]) .tab-content {
     align-items: center !important;
     justify-content: center !important;
     width: 100% !important;
+    overflow: hidden !important;
+  }
+}
+
+@keyframes tc-rail-pinned-content {
+  from {
+    margin-inline: 0 !important;
+    padding-inline: var(--tab-inline-padding, 8px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    max-width: none !important;
+    overflow: hidden !important;
+  }
+  to {
+    margin-inline: auto !important;
+    padding: 0 !important;
+    padding-inline: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: calc(var(--collapsed-tab-bar-width) - 5px - 2 * var(--tab-block-margin)) !important;
+    max-width: calc(var(--collapsed-tab-bar-width) - 5px - 2 * var(--tab-block-margin)) !important;
     overflow: hidden !important;
   }
 }
@@ -314,10 +395,11 @@ tab:not([zen-essential], [zen-glance-tab="true"]):not([pinned]) .tab-close-butto
   animation: none;
 }
 
-/* Pinned tabs: Zen absolutely positions icon stack for expanded layout */
+/* ponytail: reset Zen expanded absolute icon stack for all pinned tabs (not just zen-pinned-changed) */
 #navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
-vbox.zen-workspace-pinned-tabs-section
-tab[zen-pinned-changed="true"]:not([zen-essential]) > .tab-stack > .tab-content > .tab-icon-stack {
+#zen-tabs-wrapper
+vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
+tab[pinned]:not([zen-essential]) > .tab-stack > .tab-content > .tab-icon-stack {
   position: relative !important;
   left: auto !important;
   top: auto !important;

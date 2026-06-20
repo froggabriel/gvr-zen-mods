@@ -2,9 +2,9 @@
 
 ## What this repo is
 
-CSS utility mods for [Zen Browser](https://zen-browser.app), installed via `install.py` into the **Default (release)** profile’s `chrome/zen-themes/<mod-id>/` and patched into **`zen-themes.css`** (Zen runs the bundled aggregate, not per-mod files alone).
+CSS utility mods for [Zen Browser](https://zen-browser.app) — **Zen Mods = CSS only** per [official docs](https://docs.zen-browser.app/user-manual/extensions). Installed via `install.py` into **Default (release)** → `chrome/zen-themes/<mod-id>/` + patch **`zen-themes.css`**.
 
-**Version source of truth:** each mod’s `manifest.json`. `install.py` reads manifest for name/description/version and forces `"enabled": true` on explicit install.
+**Version source of truth:** each mod’s `manifest.json`. Optional JS (`tab-containers/rail-pending.uc.js`) is fx-autoconfig only — not the Zen Mods loader path.
 
 ## External dependency (not in this repo)
 
@@ -50,16 +50,22 @@ Each mod directory has its own `NOTES.md`.
 
 ## TODO (unfixed)
 
-- **tab-containers:** Re-add collapse hold (`435b945` companion animations) on top of `4fd2ba0` static visuals (`v1.0.8`) without touching static `.tab-background` rules. Hold primary source: expand-on-hover `1688c30`.
-- **Folder rename + expand-on-hover:** Create folder → start typing name → mouse leaves sidebar → sidebar collapses while input is still active. See `tab-containers/NOTES.md`.
+- **tab-containers #2:** Pinned stripe snap on unhover. **Ship v1.0.49.** CSS-only tries exhausted (eoh v1.0.12, tc v1.0.47–48, tc v1.0.50 scoped). Remaining: `rail-pending.uc.js` if user wants to pursue.
+- **Folder rename + expand-on-hover:** Create folder → typing name → mouse leaves sidebar → sidebar collapses while input active.
 
-## Learnings (2026-06 — collapsed rail / stripes / hold)
+## Learnings (2026-06 — pinned rail session)
 
-**Golden commits:** collapsed visuals = `gvr-zen-mods` `4fd2ba0` (tab-containers v1.0.5 static). Hold = `zen-sidebar-expand-on-hover` `1688c30` (+ companion `gvr-zen-mods` `435b945`). Same day, same “working hold” intent — do not merge by replacing static with animation-only CSS.
+**Ship baseline:** `tab-containers` **v1.0.49** = v1.0.46 pinned layout/hold + immediate pinned bg cap. **Fixed:** hover narrow (#1), label hold, icon in tile. **Open:** stripe snap (#2).
 
-**Stripes** are native `.tab-context-line`, not tab-containers stripe CSS. Need: static collapsed tab width + `clip-path: none !important` on `.tab-background` + expand-on-hover clip **exemption** for `[usercontextid]` / `:has(.tab-context-line)`.
+**Golden commits:** collapsed visuals = `4fd2ba0` (tc v1.0.5 static). Hold primary = eoh `1688c30`. tc companion = `435b945` (width/content/labels — not stripe layer).
 
-**Current baseline:** `tab-containers` v1.0.8 = exact `4fd2ba0` restored. Hold stripped from tab-containers until layered correctly. See `tab-containers/NOTES.md` for failed approaches (v1.0.7–1.0.27) and hold architecture diagram.
+**Stripes** = native `.tab-context-line` on `.tab-background`. Pinned stripe snap = tc immediate pinned bg cap, not label hold.
+
+**#1 fix (v1.0.46):** row flex is inside `zen-folder .tab-group-container`, not outer pinned vbox. Essentials ≠ pinned.
+
+**#2 dead ends:** tc global + scoped cap delay (v1.0.47–48, v1.0.50); eoh folder indent exempt (v1.0.12). **Tradeoff confirmed:** immediate cap = edge ✓ snap ✗; delayed cap = edge ✗ layout shift ✗. JS `rail-pending` only path left.
+
+Full log: `tab-containers/NOTES.md`.
 
 ## Unbuilt future work (not in repo)
 

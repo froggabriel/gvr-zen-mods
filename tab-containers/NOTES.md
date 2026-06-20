@@ -1,64 +1,65 @@
 # tab-containers — Agent Notes
 
-**Version:** 1.0.25 (confirmed baseline) · **Status:** OK except pinned hover narrow + pinned stripe snap on unhover
+**Version:** 1.0.49 (ship baseline) · **Status:** v1.0.46 layout/hold ✓ · **#2 stripe snap open (CSS-only exhausted)**
 
-## Context handoff (read this first)
+## Context handoff (read this first — Jun 2026 session)
 
-**Install:** `python3 install.py zen-sidebar-expand-on-hover tab-containers pinned-in-rail pin-align` → **Cmd+Q** Zen, reopen. tab-containers loads **last** in `zen-themes.css`.
+**Install:** `python3 install.py zen-sidebar-expand-on-hover tab-containers pinned-in-rail pin-align` → **Cmd+Q**, reopen. **tab-containers loads last** in `zen-themes.css` (wins cascade over eoh).
 
-**Stack (Jun 2026 baseline):**
+**Ship stack:**
 
 | Mod | Version | Role |
 |-----|---------|------|
-| expand-on-hover | **v1.0.11-gvr** | Primary hold: toolbox clip delay, `eoh-label-rail`, `eoh-rail-inset-*`. Pinned section collapsed default, expanded on hover. Folder width `expanded - 28px` hover-only (v1.0.9). |
-| tab-containers | **v1.0.25** | Static tile geometry + immediate pinned bg cap. Companion hold: `tc-rail-width` / content / labels (same `--transition-delay-fast` clock). |
-| pin-align | **v1.0.3** | Pinned-folder `-14px` reset when `collapsedpinnedtabs` (no dead `@media`). |
-| pinned-in-rail | **v1.0.1** | Collapsed pinned section visibility (no Case E folder width). |
+| expand-on-hover | **v1.0.11-gvr** | Primary hold: toolbox clip delay, `eoh-label-rail`, `eoh-rail-inset-*`. Pinned section collapsed default, expands on sidebar hover. |
+| tab-containers | **v1.0.49** | v1.0.46 pinned layout/hold + **immediate** pinned `.tab-background` cap |
+| pin-align | v1.0.3 | Pinned-folder offset when `collapsedpinnedtabs` |
+| pinned-in-rail | v1.0.1 | Collapsed pinned section visibility |
 
-**Works on baseline (user-verified):**
-- Normal tabs: collapsed stripes/tiles, expanded hover, **unhover hold** (title + stripe ~500ms)
-- Pinned tabs: collapsed steady — square tile + **colored edge**; **label hold on unhover matches normal** (fade/hold OK)
+### Fixed (v1.0.46 — keep in baseline)
 
-**Only two open bugs (`[pinned]` in pinned section — not Essentials):**
-1. **Hover narrow** — pinned tabs are side-by-side half-width squares, not full-width rows with labels
-2. **Unhover stripe snap** — pinned **colored edge** snaps immediately; labels still hold. Normal stripe holds through delay
+| Issue | Fix (tc only unless noted) |
+|-------|------------------------------|
+| **#1 hover narrow** (folder + top-level pinned) | Folder `.tab-group-container` hover column + tab `width:100%`; folder hover `.tab-background` `-moz-available` |
+| **Label hold on unhover** (top-level e.g. ProtonMail) | `tc-rail-pinned-content` with `animation-fill-mode: both`: `from` = expanded row, `to` = capped centered icon |
+| **Icon in tile after hold** | Same + icon-stack reset for all `tab[pinned]` (not just `zen-pinned-changed`) |
 
-**Out of scope (no bugs):** Bottom **Essentials** (`tab[zen-essential]`, e.g. YouTube, Gemini) — native Zen tile grid; tab-containers explicitly excludes `[zen-essential]`. Side-by-side square tiles there are correct.
+### Open: #2 pinned stripe snap on unhover
 
-### Inspection findings (`pinned-gmail-tab.txt`, Jun 2026)
+- **Symptom:** Pinned **colored edge** (`.tab-context-line` on `.tab-background`) snaps immediately; **labels hold** ~500ms (normal tabs hold stripe too).
+- **Cause:** tc **immediate** pinned `.tab-background` width cap (`v1.0.18`) — stripe width follows bg cap, not label animations.
+- **User dump:** `.tab-stack` → label width; `.tab-background` → colored edge width (`pinned-gmail-tab.txt`).
+- **tc cap-delay (v1.0.47–48, v1.0.50 scoped) dead end:** delayed cap trades away **steady colored edge** and causes **narrow/shifted** folder pinned layout when workspace pins expanded. Immediate cap (v1.0.49) keeps edge + alignment; stripe still snaps both modes.
 
-Gmail pinned tab path: `…pinned-tabs-section → zen-folder → .tab-group-container → tab[pinned]` (folder pinned tab, not top-level).
+### Do not confuse with pinned
 
-| Layer | display / flex | width | Notes |
-|-------|----------------|-------|-------|
-| `tab` | flex **row** | **40px** | collapsed tile width at capture |
-| `.tab-group-container` | block **row** | **119px** | **Likely #1 culprit** — row container inside folder; v1.0.44 column on outer vbox never reaches here |
-| `zen-folder` | flex column | 136px | |
-| pinned section vbox | flex **column** | 148px | already column — explains v1.0.44 no change |
+- **Essentials** (`tab[zen-essential]`, YouTube/Gemini at bottom): native tile grid, **no bugs**, out of scope.
+- **Normal-section folder tabs** (E-mail/Banking when workspace expanded): separate indent behavior; not pinned #1/#2.
 
-**tab-background computed (unhover):** pinned static cap wins — `calc(collapsed - 5px - 2*margin)` beats `-moz-available` static + Zen native. Confirms bug #2: stripe follows `.tab-background` cap, not label hold.
+### Zen Mods philosophy (official — not our repo)
 
-**User note:** `.tab-stack` drives label width; `.tab-background` drives colored edge width — explains label hold vs stripe snap split.
+Per [Zen docs](https://docs.zen-browser.app/user-manual/extensions): **Zen Mods = CSS only** (browser UI). **Extensions = JS** (web content). Official loader (`ZenMods.mjs`) loads **`chrome.css`** only. **`rail-pending.uc.js`** is fx-autoconfig — outside Zen Mods model; eoh already has `[data-rail-pending="true"]` CSS hooks but nothing sets the attr without JS.
 
-**Next #1 target:** hover `flex-direction: column` (+ full width) on `vbox…pinned-tabs-section zen-folder .tab-group-container`, not outer pinned vbox.
+**User preference:** stay CSS-only for #2 (aligned with Zen Mods). JS is last-resort via autoconfig, not theme-store path.
 
-**Constraints:** CSS-only for pinned stripe hold (no `data-rail-pending` / `rail-pending.uc.js` unless user changes mind). One change per attempt; log row in combined table below.
+### Next attempts (one mod, one log row)
 
-**Do not bundle (kills baseline):** eoh section always expanded + pinned hold; instant pinned label hide; instant pinned icon center; tc instant section width override.
+| Priority | Mod | Hypothesis |
+|----------|-----|------------|
+| **1** | ~~**eoh only**~~ | **Dead:** v1.0.12-gvr — #2 unchanged both modes; **regression:** folder pinned icons shifted right when workspace expanded. Reverted to v1.0.11-gvr. |
+| **2** | ~~**tc scoped cap**~~ | **Dead:** v1.0.50 — **split by workspace mode.** `[collapsedpinnedtabs]` = v1.0.49 (edge ✓, snap ✗). Expanded = **no steady edge**, unhover **narrow tabs shifted right**. Reverted to v1.0.49. |
+| **3** | **paired (JS)** | `rail-pending.uc.js` + tc cap `:not([data-rail-pending])` — only remaining path if #2 matters; eoh hooks exist (~728–730). Off Zen Mods model. |
 
-**Next isolated tries (one at a time):**
-- **tc only:** hover column + stretch on `pinned-tabs-section zen-folder .tab-group-container` (report: outer vbox already column; row flex is inside folder container)
-- **tc only:** delay pinned `.tab-background` cap only — keep static cap end state; labels untouched (fix #2)
+**Do not bundle (kills baseline):** eoh always-expanded pinned section + tc hold; instant pinned label hide; tc instant section width override.
 
-**Architecture reminder:** Hold is mostly **expand-on-hover** (`1688c30`). tab-containers syncs width/layout/tiles. Static `.tab-background` block (`clip-path: none !important`, `-moz-available`) must stay immediate — stripes are emergent, not painted by tc.
+**Do not touch when fixing #2:** `tc-rail-pinned-content`, `tc-rail-hide-label`, folder hover column rules (v1.0.46).
 
-**Transcript:** `agent-transcripts/58fc4eed-fbe8-43e1-be00-717303da1221.jsonl`
+**Transcript:** `agent-transcripts/58fc4eed-fbe8-43e1-be00-717303da1221.jsonl` · **DOM dump:** `pinned-gmail-tab.txt` (lines 1–49 useful; rest is accidental toolbox dump)
 
 ---
 
 **Maintained from user input + transcript.** When testing a stack, add a row: both mod versions, what changed in each, your feedback. Transcript archive: `agent-transcripts/58fc4eed-fbe8-43e1-be00-717303da1221.jsonl`.
 
-**Current installed baseline:** tab-containers **v1.0.25** + expand-on-hover **v1.0.11-gvr** (+ pin-align v1.0.3, pinned-in-rail v1.0.1).
+**Current installed baseline:** tab-containers **v1.0.49** + expand-on-hover **v1.0.11-gvr** (+ pin-align v1.0.3, pinned-in-rail v1.0.1).
 
 ### Golden references (user-confirmed)
 
@@ -67,7 +68,7 @@ Gmail pinned tab path: `…pinned-tabs-section → zen-folder → .tab-group-con
 | **`4fd2ba0` / tc v1.0.5 static CSS** | “Beautiful” collapsed + expanded; square tiles + stripes. **Does not hold** on unhover. |
 | **`435b945` / tc hold animations** | “First working hold” for normal tabs. Must **layer on** static CSS, not replace it. |
 | **`1688c30` / eoh hold** | “Working hold” — primary hold clock (`eoh-label-rail`, `eoh-rail-inset-*`, toolbox clip delay). |
-| **tc v1.0.25 + eoh v1.0.11-gvr** | Baseline: collapsed edge ✓, label hold ✓ (pinned labels match normal); **open:** hover narrow, pinned **stripe** snap on unhover |
+| **tc v1.0.46 + eoh v1.0.11-gvr** | **Ship baseline** (v1.0.49): hover rows ✓, label/icon hold ✓, steady edge ✓; stripe snap open (#2) |
 
 ### Combined stack log
 
@@ -97,15 +98,22 @@ Gmail pinned tab path: `…pinned-tabs-section → zen-folder → .tab-group-con
 | tc | tab-containers change | eoh | expand-on-hover change | User feedback |
 |----|----------------------|-----|------------------------|---------------|
 | **v1.0.44** | Hover `flex-direction: column` on pinned section only | **v1.0.11-gvr** | (unchanged) | **No change vs v1.0.25 baseline** (user confirmed no regression). Baseline detail: nested folder tabs (Banking) same width but indented right on hover; unhover shift + stripe snap unchanged. Essentials (YouTube/Gemini) are not pinned — ignore for #1. Reverted. |
+| **v1.0.45** | Folder `.tab-group-container` hover column + tab 100%; `tc-rail-pinned-content` (content width = bg cap); icon-stack reset all `[pinned]` | **v1.0.11-gvr** | (unchanged) | Top-level pinned OK; icon aligned on unhover ✓; **label hold lost** ✗; folder Gmail hover still narrow; stripe snap unchanged; normal tabs unchanged. |
+| **v1.0.46** | `tc-rail-pinned-content` `both` + from=expanded row / to=capped icon; folder pinned hover `.tab-background` `-moz-available` | **v1.0.11-gvr** | (unchanged) | **Confirmed**: ProtonMail label hold ✓, icon centered in tile ✓; folder Gmail hover full rows ✓; stripe snap unchanged ✗. **New baseline** for pinned layout/hold. |
+| **v1.0.47** | Delay pinned `.tab-background` cap via `tc-rail-pinned-bg-cap` (same end width); split bg-color anims for pinned vs normal | **v1.0.11-gvr** | (unchanged) | **Partial #2**: stripe hold ✓ when workspace pins **collapsed**; hold ✗ when workspace+folders **expanded**. Steady collapsed rail: square tile ✓, **no colored edge** ✗ (regression vs v1.0.46). Hover + label/icon hold ✓. First load improved (label ~2s then cap+color, no hover cycle needed). |
+| **v1.0.48** | `tc-rail-pinned-bg-cap` add `from` (-moz-available) + `both` fill so cap restarts on each unhover | **v1.0.11-gvr** | (unchanged) | **No change vs v1.0.47** (user confirmed). Reverted with v1.0.49. |
+| **v1.0.49** | Revert v1.0.47/48 delayed pinned bg cap; restore immediate static cap | **v1.0.11-gvr** | (unchanged) | Restore v1.0.46 steady colored edge + layout/hold; stripe snap unchanged. **Ship baseline.** |
+| **eoh v1.0.12-gvr** | Skip folder `translateX`/padding indent in pinned section when `zen-workspace:not([collapsedpinnedtabs])` on sidebar unhover | **tc v1.0.49** | (unchanged) | **Dead end.** #2 snaps both modes. Workspace expanded: folder pinned icons **shifted right** (regression). Reverted eoh to v1.0.11-gvr. |
+| **tc v1.0.50** | Scoped pinned bg cap: immediate when `[collapsedpinnedtabs]`; delayed `tc-rail-pinned-bg-cap` (`both`/`from`) when expanded | **eoh v1.0.11-gvr** | (unchanged) | **Dead end — two modes diverge.** Collapsed pins section: same as v1.0.49 (edge ✓, unhover snap ✗). Workspace expanded: hover ✓; steady collapsed **no colored edge** ✗; unhover **narrow tabs shifted right** ✗. Reverted to v1.0.49. |
 
 ### Pinned-specific feedback (by state)
 
 | State | Good (baseline) | Bad (what triggered revert) |
 |-------|-----------------|------------------------------|
 | **Collapsed steady** | Square tile + colored edge | No edge; wide pill; `[` text bleed |
-| **Expanded hover** | Full-width rows + labels | Half-width squares; tabs too short |
-| **Unhover hold** | Normal + pinned: title holds ~500ms | Pinned **stripe/edge** snaps (labels OK); centered icon → empty clip if mis-fixed |
-| **First load** | — | Text bleed until first hover/unhover |
+| **Expanded hover** | Full-width rows + labels | ~~Half-width squares~~ fixed v1.0.46 |
+| **Unhover hold** | Normal + pinned: title holds ~500ms; pinned icon centered in tile (v1.0.46) | Pinned **stripe/edge** snaps (#2); v1.0.45 label hold regression (fixed v1.0.46) |
+| **First load** | v1.0.49 steady edge OK | v1.0.47: label ~2s then cap+color without hover cycle (interesting; lost on revert) |
 
 ### Bundled failures (both mods — don’t ship in one diff)
 
@@ -118,14 +126,13 @@ Gmail pinned tab path: `…pinned-tabs-section → zen-folder → .tab-group-con
 | tc `:not([pinned])` + eoh `:not([pinned])` insets (v1.0.42) | No visible change |
 | tc pinned content reset + eoh folder scope (v1.0.43) | Left shift + text bleed |
 
-### Open problem (CSS-only)
+### Open problem (#2 — stripe hold)
 
-Pinned **stripe hold on unhover** vs **immediate static pinned bg cap** (v1.0.25 steady collapsed edge). Labels already hold — do not touch label rules when fixing stripe. User prefers **no JS**.
+Pinned stripe snap vs tc **immediate** pinned bg cap. Labels hold via `tc-rail-pinned-content` + `eoh-label-rail` — **do not touch those** when fixing stripe.
 
-**Next isolated experiments (one mod, one row in log):**
-- **tc only:** hover `flex-direction: column` on pinned section → fix hover narrow
-- **tc only:** delay pinned bg cap only (same end cap as v1.0.25 static); do not delay labels
-- **eoh only:** *(none queued — baseline v1.0.11-gvr)*
+**tc global cap delay:** tried v1.0.47–48, scoped v1.0.50 — all reverted. **CSS-only #2 exhausted** unless user wants `rail-pending.uc.js`.
+
+~~**Next isolated experiments (one mod, one row in log):**~~ → see **Context handoff** table above.
 
 ---
 
@@ -175,17 +182,22 @@ eoh-rail-inset-* (padding)    tc-rail-hide-chrome (close btn)        .tab-conten
 data-rail-pending freeze      (optional rail-pending.uc.js)          pinned icon-stack reset
 ```
 
-**Rule for next agent:** add hold by layering **435b945 animations on width/content/icons/labels only**. **Never animate or gate** the 4fd2ba0 `.tab-background` static block. Selectors for static bg stay:
+**Rule for next agent:** v1.0.46+ pinned layout/hold is **shipped** — do not regress. For #2: prefer **eoh-only** row first (workspace-expanded unhover). tc cap changes load **last** and beat eoh — pairing requires tc to **gate** cap, not eoh to override cap.
 
-`#navigator-toolbox:not(:hover, [has-popup-menu="true"], …)` — **no** `[data-rail-pending="true"]`.
+**Pinned cap conflict (confirmed v1.0.50):** immediate cap ↔ stripe hold is a **hard tradeoff**, split by `zen-workspace[collapsedpinnedtabs]`. Scoped delay fixes neither mode cleanly.
 
-Conflict: static `width !important` on tab applies immediately on unhover and **defeats** width hold. Options:
+Conflict (historical): static `width !important` on tab applies immediately on unhover and **defeats** width hold. Options:
 
 - A) Ship 4fd2ba0 only (no tab-containers hold; expand-on-hover hold from `1688c30` may be enough).
 - B) Remove static width from 4fd2ba0; use `tc-rail-width` animation only; keep static `.tab-background` + add `!important` in keyframe `to` if needed for width.
-- C) `data-rail-pending` + `rail-pending.uc.js` to suppress static width during hold window only.
+- C) `data-rail-pending` + `rail-pending.uc.js` — **off-model for Zen Mods**; user prefers CSS. eoh CSS hooks exist at `chrome.css` ~728–730.
 
-Do **not** merge by replacing the whole file with animation-only 435b945 (loses `!important` on bg) or v1.0.6-style “static bg + animated width” with `data-rail-pending` on bg.
+## v1.0.46 shipped CSS (do not regress)
+
+- Folder pinned hover: `zen-folder .tab-group-container` column + tab `width:100%` + `.tab-background` `-moz-available`
+- Pinned unhover content: `tc-rail-pinned-content` (`both`, from expanded row → to capped icon)
+- Icon-stack reset: all `tab[pinned]` in pinned section on `:not(:hover)`
+- Immediate pinned bg cap (v1.0.49): static width on pinned `.tab-background` for steady colored edge
 
 ## Companion mods at golden visual baseline
 
@@ -197,9 +209,9 @@ At `4fd2ba0` / current v1.0.8:
 
 Install order in `zen-themes.css`: expand-on-hover → pinned-in-rail → pin-align → **tab-containers last**.
 
-## Optional JS hold
+## Optional JS hold (off-model)
 
-`rail-pending.uc.js` sets `data-rail-pending="true"` on `#navigator-toolbox` during collapse delay. expand-on-hover already reacts (`animation: none` on labels, full tab-background clip on pending). `install.py` skips copy if profile has no `chrome/utils/` (fx-autoconfig). Release profile often needs manual setup.
+`rail-pending.uc.js` sets `data-rail-pending="true"` during collapse delay. eoh reacts (`animation: none` on labels, full `.tab-background` clip). `install.py` copies only if `chrome/utils/` exists (fx-autoconfig). **Not Zen Mods path** — see Context handoff.
 
 ## Install / test
 
