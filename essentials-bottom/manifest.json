@@ -2,7 +2,7 @@
   "id": "essentials-bottom",
   "name": "[GVR] Essentials Bottom",
   "description": "Moves essentials tabs to the bottom of the vertical sidebar, below workspace tabs.",
-  "version": "1.0.3",
+  "version": "1.0.8",
   "author": "gvidaurr",
   "theme": "chrome.css",
   "readme": "README.md"

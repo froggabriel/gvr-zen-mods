@@ -1,6 +1,6 @@
 # essentials-bottom — Agent Notes
 
-**Version:** 1.0.3 · **Status:** Working
+**Version:** 1.0.8 · **Status:** Working (v1.0.7 overlap fix + overflow-x hidden)
 
 ## Goal
 

@@ -1,38 +1,81 @@
-/* essentials-bottom v1.0.3
+/* essentials-bottom v1.0.8
    Moves the essentials grid below workspace tabs in the vertical sidebar. */
 
 @media (-moz-bool-pref: "zen.tabs.vertical") {
 
-  #zen-tabs-wrapper {
-    order: 0 !important;
+  /* Height chain — tabbrowser-tabs must shrink so essentials sit in flow at bottom */
+  #TabsToolbar,
+  #TabsToolbar-customization-target,
+  tabs#tabbrowser-tabs {
+    display: flex !important;
+    flex-direction: column !important;
     flex: 1 1 auto !important;
     min-height: 0 !important;
+    overflow: hidden !important;
   }
 
-  /* Zen sets inline padding-top on each workspace to reserve essentials height at
-     the top — clear it once essentials live at the bottom */
+  #zen-tabs-wrapper {
+    order: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 0 !important;
+    min-height: 0 !important; /* beat Zen vertical-tabs fit-content */
+    height: 0 !important;
+    overflow: hidden !important; /* beat Zen overflow-y: auto on wrapper */
+  }
+
+  #zen-tabs-wrapper > #tabbrowser-arrowscrollbox {
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    height: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important; /* ponytail: eoh uses expanded width inside collapsed clip */
+    position: relative !important;
+  }
+
+  .workspace-arrowscrollbox {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+  }
+
+  /* ponytail: reserve scroll space above essentials (modern ::part + legacy scrollbox) */
+  #tabbrowser-arrowscrollbox::part(scrollbox),
+  #tabbrowser-arrowscrollbox scrollbox,
+  .workspace-arrowscrollbox::part(scrollbox),
+  .workspace-arrowscrollbox scrollbox {
+    padding-bottom: calc(var(--zen-essentials-reserve, 96px) + var(--zen-toolbox-padding, 8px)) !important;
+    box-sizing: border-box !important;
+  }
+
   #zen-tabs-wrapper zen-workspace {
     padding-top: 0 !important;
   }
 
   #zen-essentials {
     order: 999 !important;
-    margin-top: auto !important;
-    flex-shrink: 0 !important;
+    flex: 0 0 auto !important;
     position: relative !important;
+    z-index: 2 !important;
     margin-inline: calc(-1 * var(--zen-toolbox-padding)) !important;
     width: calc(100% + 2 * var(--zen-toolbox-padding)) !important;
     min-width: unset !important;
-    overflow: visible !important;
+    background: var(--zen-toolbar-bg, var(--toolbar-bgcolor)) !important;
   }
 
+  /* Beat Zen vertical-tabs position:absolute on essentials grid */
   #zen-essentials .zen-essentials-container:not([hidden="true"]) {
     position: relative !important;
+    inset: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
     width: 100% !important;
     min-width: 0 !important;
     max-width: none !important;
     overflow: visible !important;
     box-sizing: border-box !important;
+    margin-top: 0 !important;
   }
 
 }

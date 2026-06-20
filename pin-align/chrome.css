@@ -8,6 +8,9 @@
 /* Workspace expanded, folder labels visible */
 zen-workspace:not([collapsedpinnedtabs])
 vbox.zen-workspace-pinned-tabs-section
+zen-folder .tabbrowser-tab,
+zen-workspace:not([collapsedpinnedtabs])
+vbox.zen-workspace-normal-tabs-section
 zen-folder .tabbrowser-tab {
   --zen-folder-indent: 14px !important;
 }

@@ -1,4 +1,4 @@
-/* tab-containers v1.0.51 — instant collapse: snap edge + hide labels (no hold window) */
+/* tab-containers v1.0.54 — folder indent: margin + narrower width (right edge aligns) */
 
 /* ponytail: shared transition for collapsed↔expanded bg handoff */
 #navigator-toolbox #zen-tabs-wrapper
@@ -15,15 +15,15 @@ tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) {
   animation: none !important;
 }
 
-/* Expanded: normal tabs only — pinned section has its own width rules below */
+/* Expanded: top-level normal tabs only — folder tabs keep eoh calc(expanded - 28px) indent */
 #navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 vbox.zen-workspace-normal-tabs-section
-tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]),
+> tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]),
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
 #zen-tabs-wrapper
 vbox.zen-workspace-normal-tabs-section
-tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) {
+> tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) {
   animation: none !important;
   width: auto !important;
   max-width: none !important;
@@ -69,10 +69,12 @@ tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]),
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
 zen-folder .tab-group-container
 tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) {
-  width: 100% !important;
-  max-width: none !important;
+  margin-inline-start: var(--zen-folder-indent, 14px) !important;
+  width: calc(100% - var(--zen-folder-indent, 14px)) !important;
+  max-width: calc(100% - var(--zen-folder-indent, 14px)) !important;
   min-width: 0 !important;
   flex: 0 0 auto !important;
+  box-sizing: border-box !important;
 }
 
 #navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
@@ -86,7 +88,7 @@ vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
 zen-folder .tab-group-container
 tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background {
   width: -moz-available !important;
-  max-width: none !important;
+  max-width: 100% !important;
 }
 
 #navigator-toolbox:not([zen-right-side="true"]):is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
@@ -109,14 +111,44 @@ vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section {
   margin-right: 0 !important;
 }
 
+/* Expanded: folder tabs/subfolders — indent left, shrink width so right edge matches top-level */
+#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#zen-tabs-wrapper
+zen-folder .tab-group-container > tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]),
+#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#zen-tabs-wrapper
+zen-folder .tab-group-container > zen-folder,
+#navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
+#zen-tabs-wrapper
+zen-folder .tab-group-container > tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]),
+#navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
+#zen-tabs-wrapper
+zen-folder .tab-group-container > zen-folder {
+  margin-inline-start: var(--zen-folder-indent, 14px) !important;
+  width: calc(100% - var(--zen-folder-indent, 14px)) !important;
+  max-width: calc(100% - var(--zen-folder-indent, 14px)) !important;
+  box-sizing: border-box !important;
+}
+
+#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#zen-tabs-wrapper
+zen-folder .tab-group-container > tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background,
+#navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
+#zen-tabs-wrapper
+zen-folder .tab-group-container > tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background {
+  width: -moz-available !important;
+  max-width: 100% !important;
+}
+
+/* Expanded: top-level pinned tabs only — folder tabs live inside padded .tab-group-container */
 #navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
-tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]),
+> tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]),
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
 #zen-tabs-wrapper
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
-tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) {
+> tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) {
   animation: none !important;
   width: 100% !important;
   max-width: none !important;
