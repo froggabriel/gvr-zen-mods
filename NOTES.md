@@ -2,13 +2,13 @@
 
 ## What this repo is
 
-CSS utility mods for [Zen Browser](https://zen-browser.app), installed via `install.py` into each profile’s `chrome/zen-themes/<mod-id>/` and patched into **`zen-themes.css`** (Zen runs the bundled aggregate, not per-mod files alone).
+CSS utility mods for [Zen Browser](https://zen-browser.app), installed via `install.py` into the **Default (release)** profile’s `chrome/zen-themes/<mod-id>/` and patched into **`zen-themes.css`** (Zen runs the bundled aggregate, not per-mod files alone).
 
 **Version source of truth:** each mod’s `manifest.json`. `install.py` reads manifest for name/description/version and forces `"enabled": true` on explicit install.
 
 ## External dependency (not in this repo)
 
-**`zen-sidebar-expand-on-hover`** — fork/base at `~/Repos/zen-sidebar-expand-on-hover` (froggabriel lineage). Native Zen removed expand-on-hover in ~1.0.2-b.0; this mod provides collapsed icon rail + hover expand via `#navigator-toolbox { width: expanded; clip-path: inset … }`.
+**`zen-sidebar-expand-on-hover`** — fork at `~/Repos/zen-sidebar-expand-on-hover` (froggabriel lineage). GVR patch: collapsed favicon margins scoped to `:not(:hover)` with `--transition-delay-fast`. Install via `python3 install.py zen-sidebar-expand-on-hover` (listed first in full install).
 
 Most GVR mods are **companions** that fix rail UX on top of that model.
 
@@ -40,16 +40,22 @@ python3 install.py              # all mods
 python3 install.py tab-containers   # one mod
 ```
 
-Restart Zen after install. Profiles: `~/Library/Application Support/zen/Profiles/*/`.
+Restart Zen after install.
+
+**Profile:** `install.py` targets `Default (release)` only. Override: `ZEN_PROFILE=substring python3 install.py …`. Do not install to every profile under `Profiles/*` — orphan profiles (e.g. old `Default Profile`) may have unrelated tooling (Sine, etc.).
 
 ## Per-mod deep dives
 
 Each mod directory has its own `NOTES.md`.
 
+## TODO (unfixed)
+
+- **Folder rename + expand-on-hover:** Create folder → start typing name → mouse leaves sidebar → sidebar collapses while input is still active; user can't see what they're typing. Likely needs expand-on-hover `:hover` guard for folder rename input focus (or upstream Zen attribute). See `tab-containers/NOTES.md`.
+
 ## Unbuilt future work (not in repo)
 
-- **`gvr-sidebar-rail`** — opinionated clean-slate mod spec existed in conversation (flat rail, essentials linear/mosaic, overlay vs push). Not implemented here.
-- **tab-containers collapse sync** — v1.0.6 partial; see `tab-containers/NOTES.md` failure history before v1.0.7–1.0.8.
+- **`gvr-sidebar-rail`** — opinionated clean-slate mod spec (flat rail, essentials linear/mosaic). Not implemented.
+- **tab-containers collapse hold** — abandoned after CSS/JS attempts; stay on v1.0.5.
 
 ## User UX target (context)
 
