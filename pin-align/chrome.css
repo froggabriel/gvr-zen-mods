@@ -1,46 +1,42 @@
-/* pin-align v1.0.2
+/* pin-align v1.0.3
 
    Keeps pinned folder-tab icons aligned with other pinned tabs when the
    workspace pinned section is collapsed. Without labels, folder tabs should
    sit at translateX(0) — not the -14px offset expand-on-hover uses for
    folder chrome. Blocks hover from adding margin-inline-start. */
 
-@media (-moz-bool-pref: "zen.view.sidebar-expanded") {
+/* Workspace expanded, folder labels visible */
+zen-workspace:not([collapsedpinnedtabs])
+vbox.zen-workspace-pinned-tabs-section
+zen-folder .tabbrowser-tab {
+  --zen-folder-indent: 14px !important;
+}
 
-  /* Original fix: workspace expanded, folder labels visible */
-  zen-workspace:not([collapsedpinnedtabs])
-  vbox.zen-workspace-pinned-tabs-section
-  zen-folder .tabbrowser-tab {
-    --zen-folder-indent: 14px !important;
-  }
+/* Workspace pins collapsed: align with top-level pinned tabs, no hover shift */
+zen-workspace[collapsedpinnedtabs]
+vbox.zen-workspace-pinned-tabs-section
+zen-folder {
+  margin-inline-start: 0 !important;
+}
 
-  /* Workspace pins collapsed: align with top-level pinned tabs, no hover shift */
-  zen-workspace[collapsedpinnedtabs]
-  vbox.zen-workspace-pinned-tabs-section
-  zen-folder {
-    margin-inline-start: 0 !important;
-  }
+zen-workspace[collapsedpinnedtabs]
+vbox.zen-workspace-pinned-tabs-section
+zen-folder .tab-group-container > * {
+  margin-inline-start: 0 !important;
+}
 
-  zen-workspace[collapsedpinnedtabs]
-  vbox.zen-workspace-pinned-tabs-section
-  zen-folder .tab-group-container > * {
-    margin-inline-start: 0 !important;
-  }
+#navigator-toolbox:not([zen-right-side="true"])
+zen-workspace[collapsedpinnedtabs]
+vbox.zen-workspace-pinned-tabs-section
+zen-folder .tab-group-container {
+  transform: translateX(0) !important;
+  padding-inline-end: 0 !important;
+}
 
-  #navigator-toolbox:not([zen-right-side="true"])
-  zen-workspace[collapsedpinnedtabs]
-  vbox.zen-workspace-pinned-tabs-section
-  zen-folder .tab-group-container {
-    transform: translateX(0) !important;
-    padding-inline-end: 0 !important;
-  }
-
-  #navigator-toolbox[zen-right-side="true"]
-  zen-workspace[collapsedpinnedtabs]
-  vbox.zen-workspace-pinned-tabs-section
-  zen-folder .tab-group-container {
-    transform: translateX(0) !important;
-    padding-inline-start: 0 !important;
-  }
-
+#navigator-toolbox[zen-right-side="true"]
+zen-workspace[collapsedpinnedtabs]
+vbox.zen-workspace-pinned-tabs-section
+zen-folder .tab-group-container {
+  transform: translateX(0) !important;
+  padding-inline-start: 0 !important;
 }

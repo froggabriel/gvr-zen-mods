@@ -2,7 +2,7 @@
   "id": "tab-containers",
   "name": "[GVR] Tab Containers",
   "description": "Essentials-style tile backgrounds on workspace tabs in collapsed rail. Centers favicons, hides close buttons until expand. Collapse hold via animation delay.",
-  "version": "1.0.8",
+  "version": "1.0.25",
   "author": "gvidaurr",
   "theme": "chrome.css",
   "readme": "README.md"

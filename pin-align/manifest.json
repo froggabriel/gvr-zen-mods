@@ -2,7 +2,7 @@
   "id": "pin-align",
   "name": "[GVR] Pin Align",
   "description": "Fixes pinned folder-tab icon alignment in the collapsed rail. Prevents icons from shifting on sidebar hover.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "gvidaurr",
   "theme": "chrome.css",
   "readme": "README.md"

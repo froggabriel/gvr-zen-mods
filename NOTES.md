@@ -50,12 +50,20 @@ Each mod directory has its own `NOTES.md`.
 
 ## TODO (unfixed)
 
-- **Folder rename + expand-on-hover:** Create folder → start typing name → mouse leaves sidebar → sidebar collapses while input is still active; user can't see what they're typing. Likely needs expand-on-hover `:hover` guard for folder rename input focus (or upstream Zen attribute). See `tab-containers/NOTES.md`.
+- **tab-containers:** Re-add collapse hold (`435b945` companion animations) on top of `4fd2ba0` static visuals (`v1.0.8`) without touching static `.tab-background` rules. Hold primary source: expand-on-hover `1688c30`.
+- **Folder rename + expand-on-hover:** Create folder → start typing name → mouse leaves sidebar → sidebar collapses while input is still active. See `tab-containers/NOTES.md`.
+
+## Learnings (2026-06 — collapsed rail / stripes / hold)
+
+**Golden commits:** collapsed visuals = `gvr-zen-mods` `4fd2ba0` (tab-containers v1.0.5 static). Hold = `zen-sidebar-expand-on-hover` `1688c30` (+ companion `gvr-zen-mods` `435b945`). Same day, same “working hold” intent — do not merge by replacing static with animation-only CSS.
+
+**Stripes** are native `.tab-context-line`, not tab-containers stripe CSS. Need: static collapsed tab width + `clip-path: none !important` on `.tab-background` + expand-on-hover clip **exemption** for `[usercontextid]` / `:has(.tab-context-line)`.
+
+**Current baseline:** `tab-containers` v1.0.8 = exact `4fd2ba0` restored. Hold stripped from tab-containers until layered correctly. See `tab-containers/NOTES.md` for failed approaches (v1.0.7–1.0.27) and hold architecture diagram.
 
 ## Unbuilt future work (not in repo)
 
 - **`gvr-sidebar-rail`** — opinionated clean-slate mod spec (flat rail, essentials linear/mosaic). Not implemented.
-- **tab-containers collapse hold** — abandoned after CSS/JS attempts; stay on v1.0.5.
 
 ## User UX target (context)
 
