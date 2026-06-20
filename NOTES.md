@@ -50,7 +50,7 @@ Each mod directory has its own `NOTES.md`.
 
 ## TODO (unfixed)
 
-- **tab-containers #2:** Pinned stripe snap on unhover. **Ship v1.0.49.** CSS-only tries exhausted (eoh v1.0.12, tc v1.0.47–48, tc v1.0.50 scoped). Remaining: `rail-pending.uc.js` if user wants to pursue.
+- **tab-containers:** **v1.0.51** instant collapse (snap + hide labels). #2 stripe-hold closed by user preference.
 - **Folder rename + expand-on-hover:** Create folder → typing name → mouse leaves sidebar → sidebar collapses while input active.
 
 ## Learnings (2026-06 — pinned rail session)

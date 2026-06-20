@@ -1,6 +1,6 @@
 # tab-containers — Agent Notes
 
-**Version:** 1.0.49 (ship baseline) · **Status:** v1.0.46 layout/hold ✓ · **#2 stripe snap open (CSS-only exhausted)**
+**Version:** 1.0.51 (ship) · **Status:** instant collapse snap · **#2 accepted** (no label hold)
 
 ## Context handoff (read this first — Jun 2026 session)
 
@@ -11,7 +11,7 @@
 | Mod | Version | Role |
 |-----|---------|------|
 | expand-on-hover | **v1.0.11-gvr** | Primary hold: toolbox clip delay, `eoh-label-rail`, `eoh-rail-inset-*`. Pinned section collapsed default, expands on sidebar hover. |
-| tab-containers | **v1.0.49** | v1.0.46 pinned layout/hold + **immediate** pinned `.tab-background` cap |
+| tab-containers | **v1.0.51** | v1.0.46 layout + **instant collapse** (snap edge + hide labels; no hold) |
 | pin-align | v1.0.3 | Pinned-folder offset when `collapsedpinnedtabs` |
 | pinned-in-rail | v1.0.1 | Collapsed pinned section visibility |
 
@@ -23,12 +23,9 @@
 | **Label hold on unhover** (top-level e.g. ProtonMail) | `tc-rail-pinned-content` with `animation-fill-mode: both`: `from` = expanded row, `to` = capped centered icon |
 | **Icon in tile after hold** | Same + icon-stack reset for all `tab[pinned]` (not just `zen-pinned-changed`) |
 
-### Open: #2 pinned stripe snap on unhover
+### #2 accepted — instant collapse (v1.0.51)
 
-- **Symptom:** Pinned **colored edge** (`.tab-context-line` on `.tab-background`) snaps immediately; **labels hold** ~500ms (normal tabs hold stripe too).
-- **Cause:** tc **immediate** pinned `.tab-background` width cap (`v1.0.18`) — stripe width follows bg cap, not label animations.
-- **User dump:** `.tab-stack` → label width; `.tab-background` → colored edge width (`pinned-gmail-tab.txt`).
-- **tc cap-delay (v1.0.47–48, v1.0.50 scoped) dead end:** delayed cap trades away **steady colored edge** and causes **narrow/shifted** folder pinned layout when workspace pins expanded. Immediate cap (v1.0.49) keeps edge + alignment; stripe still snaps both modes.
+User accepts stripe snap. **v1.0.51** removes hold window: normal + pinned snap to tile on unhover; labels `display:none` immediately (overrides eoh `eoh-label-rail`). CSS-only stripe-hold attempts dead (v1.0.47–48, v1.0.50, eoh v1.0.12).
 
 ### Do not confuse with pinned
 
@@ -104,7 +101,7 @@ Per [Zen docs](https://docs.zen-browser.app/user-manual/extensions): **Zen Mods 
 | **v1.0.48** | `tc-rail-pinned-bg-cap` add `from` (-moz-available) + `both` fill so cap restarts on each unhover | **v1.0.11-gvr** | (unchanged) | **No change vs v1.0.47** (user confirmed). Reverted with v1.0.49. |
 | **v1.0.49** | Revert v1.0.47/48 delayed pinned bg cap; restore immediate static cap | **v1.0.11-gvr** | (unchanged) | Restore v1.0.46 steady colored edge + layout/hold; stripe snap unchanged. **Ship baseline.** |
 | **eoh v1.0.12-gvr** | Skip folder `translateX`/padding indent in pinned section when `zen-workspace:not([collapsedpinnedtabs])` on sidebar unhover | **tc v1.0.49** | (unchanged) | **Dead end.** #2 snaps both modes. Workspace expanded: folder pinned icons **shifted right** (regression). Reverted eoh to v1.0.11-gvr. |
-| **tc v1.0.50** | Scoped pinned bg cap: immediate when `[collapsedpinnedtabs]`; delayed `tc-rail-pinned-bg-cap` (`both`/`from`) when expanded | **eoh v1.0.11-gvr** | (unchanged) | **Dead end — two modes diverge.** Collapsed pins section: same as v1.0.49 (edge ✓, unhover snap ✗). Workspace expanded: hover ✓; steady collapsed **no colored edge** ✗; unhover **narrow tabs shifted right** ✗. Reverted to v1.0.49. |
+| **tc v1.0.51** | Replace hold animations with instant collapsed static rules; labels `display:none` + override eoh label fade | **eoh v1.0.11-gvr** | (unchanged) | User choice: accept snap; no edge-then-text on unhover. *(pending test)* |
 
 ### Pinned-specific feedback (by state)
 
