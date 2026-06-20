@@ -1,0 +1,87 @@
+/* tab-containers v1.0.5
+   Workspace tabs keep tile backgrounds in collapsed rail. expand-on-hover
+   clip-paths non-essential tab backgrounds to a favicon sliver. */
+
+/* ponytail: long selector mirrors expand-on-hover collapsed-sidebar inverse */
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) {
+  width: calc(var(--collapsed-tab-bar-width) - 5px) !important;
+  max-width: calc(var(--collapsed-tab-bar-width) - 5px) !important;
+}
+
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background,
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+zen-folder .tab-group-container tab .tab-background {
+  clip-path: none !important;
+  border-radius: var(--border-radius-medium) !important;
+  width: -moz-available !important;
+  max-width: -moz-available !important;
+  margin-inline: var(--tab-block-margin) !important;
+}
+
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"]) .tab-background {
+  background: var(--zen-toolbar-element-bg) !important;
+  border: none !important;
+}
+
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):hover:not([visuallyselected], [multiselected="true"]) .tab-background {
+  background: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.2)) !important;
+}
+
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"]) .tab-background {
+  background: light-dark(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.2)) !important;
+  border: none !important;
+}
+
+/* Center favicons like essentials; hide expanded-layout chrome in tiles */
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([zen-essential], [zen-glance-tab="true"]) .tab-content {
+  margin-inline: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([zen-essential], [zen-glance-tab="true"]) .tab-icon-stack,
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([zen-essential], [zen-glance-tab="true"]) .tab-icon-image {
+  margin-inline: 0 !important;
+}
+
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([zen-essential], [zen-glance-tab="true"]) .tab-label-container,
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([zen-essential], [zen-glance-tab="true"]):not([pinned]) .tab-close-button,
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([zen-essential], [zen-glance-tab="true"]) .tab-reset-button {
+  display: none !important;
+}
+
+/* Pinned tabs: Zen absolutely positions icon stack for expanded layout */
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+vbox.zen-workspace-pinned-tabs-section
+tab[zen-pinned-changed="true"]:not([zen-essential]) > .tab-stack > .tab-content > .tab-icon-stack {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+}

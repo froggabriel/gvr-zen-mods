@@ -1,0 +1,8 @@
+[
+  {
+    "property": "mod.gvr-active-tabs-first.hide_inactive_in_rail",
+    "label": "Hide inactive tabs in rail",
+    "type": "checkbox",
+    "defaultValue": true
+  }
+]

@@ -1,0 +1,38 @@
+/* active-first v1.0.0
+
+   Rail: active tabs on top, inactive hidden (configurable).
+   Hover: inactive tabs revealed at bottom, disappearing after sidebar collapses.
+   Timing synced via zen-sidebar-expand-on-hover's own CSS vars. */
+
+@media (-moz-bool-pref: "zen.view.sidebar-expanded") {
+
+  /* Always: inactive unpinned tabs sorted to bottom of section */
+  tab[pending="true"]:not([zen-essential]):not([pinned]) {
+    order: 999 !important;
+  }
+
+  @media (-moz-pref("mod.gvr-active-tabs-first.hide_inactive_in_rail", true)) {
+
+    /* Rail: collapse to zero height — invisible, no layout space */
+    tab[pending="true"]:not([zen-essential]):not([pinned]) {
+      max-height: 0 !important;
+      overflow: hidden !important;
+      /* Disappear after sidebar finishes collapsing:
+         delay = collapse_delay, duration = animation_duration (from sibling mod) */
+      transition: max-height var(--transition-duration, 200ms) ease
+                  calc(var(--transition-delay-after, 300ms) + var(--transition-duration, 200ms)) !important;
+    }
+
+    /* Hover: reveal immediately as sidebar expands */
+    #navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+    tab[pending="true"]:not([zen-essential]):not([pinned]),
+    #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
+    tab[pending="true"]:not([zen-essential]):not([pinned]) {
+      max-height: 35px !important;
+      overflow: visible !important;
+      transition: max-height var(--transition-duration, 200ms) ease 0ms !important;
+    }
+
+  }
+
+}

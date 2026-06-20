@@ -1,0 +1,9 @@
+{
+  "id": "clean-sidebar-header",
+  "name": "[GVR] Clean Sidebar Header",
+  "description": "Hides the distracting title bar in extension sidebars for a cleaner, minimalist look.",
+  "version": "1.0.0",
+  "author": "gvidaurr",
+  "theme": "chrome.css",
+  "readme": "README.md"
+}

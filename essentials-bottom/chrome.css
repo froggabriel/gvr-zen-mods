@@ -1,0 +1,38 @@
+/* essentials-bottom v1.0.3
+   Moves the essentials grid below workspace tabs in the vertical sidebar. */
+
+@media (-moz-bool-pref: "zen.tabs.vertical") {
+
+  #zen-tabs-wrapper {
+    order: 0 !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+  }
+
+  /* Zen sets inline padding-top on each workspace to reserve essentials height at
+     the top — clear it once essentials live at the bottom */
+  #zen-tabs-wrapper zen-workspace {
+    padding-top: 0 !important;
+  }
+
+  #zen-essentials {
+    order: 999 !important;
+    margin-top: auto !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
+    margin-inline: calc(-1 * var(--zen-toolbox-padding)) !important;
+    width: calc(100% + 2 * var(--zen-toolbox-padding)) !important;
+    min-width: unset !important;
+    overflow: visible !important;
+  }
+
+  #zen-essentials .zen-essentials-container:not([hidden="true"]) {
+    position: relative !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+  }
+
+}

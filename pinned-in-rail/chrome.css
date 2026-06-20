@@ -1,0 +1,70 @@
+/* pinned-in-rail v1.0.2
+   When zen-workspace[collapsedpinnedtabs]: reset spacer margins (Case B),
+   show non-pending tabs (Case A), hide folder labels (Case C), pending
+   tabs (Case D), folder tab full width (Case E). */
+
+/* Case A: restore natural height/opacity on non-pending tabs */
+vbox.zen-workspace-pinned-tabs-section
+.tabbrowser-tab:not([pending="true"], [zen-glance-tab="true"]) {
+  height: unset !important;
+  max-height: unset !important;
+  opacity: 1 !important;
+}
+
+/* Case B: reset all group spacer margins */
+zen-workspace[collapsedpinnedtabs]
+vbox.zen-workspace-pinned-tabs-section
+.zen-tab-group-start {
+  margin-top: 0 !important;
+}
+
+/* Case C: hide all folder labels — no folder chrome in collapsed rail */
+zen-workspace[collapsedpinnedtabs]
+vbox.zen-workspace-pinned-tabs-section
+.tab-group-label-container {
+  height: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Case D: hide pending tabs when pins are collapsed */
+zen-workspace[collapsedpinnedtabs]
+vbox.zen-workspace-pinned-tabs-section
+.tabbrowser-tab[pending="true"] {
+  height: 0 !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+  opacity: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Case E: folder pinned tabs same width as top-level — expand-on-hover sets
+   zen-folder .tab-group-container .tabbrowser-tab to calc(expanded - 28px) */
+zen-workspace[collapsedpinnedtabs]
+vbox.zen-workspace-pinned-tabs-section
+zen-folder .tab-group-container {
+  clip-path: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+zen-workspace[collapsedpinnedtabs]
+vbox.zen-workspace-pinned-tabs-section
+zen-folder .tab-group-container tab,
+zen-workspace[collapsedpinnedtabs]
+vbox.zen-workspace-pinned-tabs-section
+zen-folder .tab-group-container .tabbrowser-tab {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+zen-workspace[collapsedpinnedtabs]
+vbox.zen-workspace-pinned-tabs-section
+zen-folder .tab-group-container tab .tab-background,
+zen-workspace[collapsedpinnedtabs]
+vbox.zen-workspace-pinned-tabs-section
+zen-folder .tab-group-container .tabbrowser-tab .tab-background {
+  width: -moz-available !important;
+  max-width: -moz-available !important;
+  clip-path: none !important;
+}
