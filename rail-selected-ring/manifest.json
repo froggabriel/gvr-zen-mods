@@ -1,0 +1,9 @@
+{
+  "id": "rail-selected-ring",
+  "name": "[GVR] Rail Selected Ring",
+  "description": "Collapsed rail tile backgrounds and selected-tab inset ring; container tabs use identity color.",
+  "version": "1.0.0",
+  "author": "gvidaurr",
+  "theme": "chrome.css",
+  "readme": "README.md"
+}

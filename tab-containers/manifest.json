@@ -1,8 +1,8 @@
 {
   "id": "tab-containers",
   "name": "[GVR] Tab Containers",
-  "description": "Essentials-style tile backgrounds on workspace tabs in collapsed rail. Instant collapse snap (edge + labels); no hold window.",
-  "version": "1.0.55",
+  "description": "Essentials-style tile geometry on workspace tabs in collapsed rail. Instant collapse snap.",
+  "version": "1.0.57",
   "author": "gvidaurr",
   "theme": "chrome.css",
   "readme": "README.md"

@@ -1,0 +1,54 @@
+/* rail-selected-ring v1.0.0
+   Collapsed rail: subtle tile backgrounds + selected inset ring.
+   Container tabs use --identity-icon-color for the ring (matches stripe). */
+
+#navigator-toolbox #zen-tabs-wrapper
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background {
+  transition: background-color var(--transition-duration) ease, box-shadow var(--transition-duration) ease !important;
+}
+
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"]):not(:hover) .tab-background {
+  animation: none !important;
+  background-color: var(--zen-toolbar-element-bg) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):hover:not([visuallyselected], [multiselected="true"]) .tab-background {
+  animation: none !important;
+  background-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.2)) !important;
+  box-shadow: none !important;
+}
+
+/* Non-container selected: neutral inset ring, same tile fill as others */
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"]) .tab-background {
+  animation: none !important;
+  background-color: var(--zen-toolbar-element-bg) !important;
+  border-color: transparent !important;
+  box-shadow: inset 0 0 0 1.5px light-dark(rgba(0, 0, 0, 0.28), rgba(255, 255, 255, 0.42)) !important;
+}
+
+/* Container selected: ring matches identity / stripe color */
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab[usercontextid]:is([visuallyselected], [multiselected="true"]) .tab-background {
+  animation: none !important;
+  background-color: var(--zen-toolbar-element-bg) !important;
+  border-color: transparent !important;
+  box-shadow: inset 0 0 0 1.5px var(--identity-icon-color, var(--toolbarbutton-icon-fill, currentColor)) !important;
+}
+
+#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#zen-tabs-wrapper
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background,
+#navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
+#zen-tabs-wrapper
+tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background {
+  box-shadow: none;
+}
