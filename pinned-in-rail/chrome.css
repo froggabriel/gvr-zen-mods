@@ -1,7 +1,7 @@
-/* pinned-in-rail v1.0.2
+/* pinned-in-rail v1.0.1
    When zen-workspace[collapsedpinnedtabs]: reset spacer margins (Case B),
-   show non-pending tabs (Case A), hide folder labels (Case C), pending
-   tabs (Case D), folder tab full width (Case E). */
+   show non-pending tabs (Case A), hide folder labels (Case C) and pending
+   tabs (Case D). */
 
 /* Case A: restore natural height/opacity on non-pending tabs */
 vbox.zen-workspace-pinned-tabs-section
@@ -36,35 +36,4 @@ vbox.zen-workspace-pinned-tabs-section
   max-height: 0 !important;
   opacity: 0 !important;
   overflow: hidden !important;
-}
-
-/* Case E: folder pinned tabs same width as top-level — expand-on-hover sets
-   zen-folder .tab-group-container .tabbrowser-tab to calc(expanded - 28px) */
-zen-workspace[collapsedpinnedtabs]
-vbox.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container {
-  clip-path: none !important;
-  width: 100% !important;
-  max-width: 100% !important;
-}
-
-zen-workspace[collapsedpinnedtabs]
-vbox.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container tab,
-zen-workspace[collapsedpinnedtabs]
-vbox.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container .tabbrowser-tab {
-  width: 100% !important;
-  max-width: 100% !important;
-}
-
-zen-workspace[collapsedpinnedtabs]
-vbox.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container tab .tab-background,
-zen-workspace[collapsedpinnedtabs]
-vbox.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container .tabbrowser-tab .tab-background {
-  width: -moz-available !important;
-  max-width: -moz-available !important;
-  clip-path: none !important;
 }

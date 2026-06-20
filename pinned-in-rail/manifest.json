@@ -2,7 +2,7 @@
   "id": "pinned-in-rail",
   "name": "[GVR] Pinned In Rail",
   "description": "Keeps all loaded pinned tabs visible in the rail when their workspace section is collapsed.",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "author": "gvidaurr",
   "theme": "chrome.css",
   "readme": "README.md"

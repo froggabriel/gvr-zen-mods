@@ -1,6 +1,12 @@
 # tab-containers — Agent Notes
 
-**Version:** 1.0.5 · **Status:** collapse hold via CSS animation (known-good baseline)
+**Version:** 1.0.5 · **Status:** collapse hold baseline (experiment B reverted on expand-on-hover)
+
+## Experiment B′
+
+- **Collapsed:** `eoh-rail-inset-*` padding animation (expand-on-hover)
+- **Expanded:** `revert` on tab-content — no rail calc on hover
+- **tab-containers expand:** `revert` tc-rail-content forwards (fixes shift vs + New Tab)
 
 ## Collapse hold
 
