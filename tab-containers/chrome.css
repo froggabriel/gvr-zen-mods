@@ -1,4 +1,4 @@
-/* tab-containers v1.0.57 — tile geometry; folder indent scoped by section */
+/* tab-containers v1.0.58 — tile geometry; folder indent scoped by section */
 
 /* ponytail: shared transition for collapsed↔expanded bg handoff */
 #navigator-toolbox #zen-tabs-wrapper
@@ -352,7 +352,10 @@ tab:not([zen-essential], [zen-glance-tab="true"]) .tab-label-container {
 tab:not([zen-essential], [zen-glance-tab="true"]):not([pinned]) .tab-close-button,
 #navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
-tab:not([zen-essential], [zen-glance-tab="true"]) .tab-reset-button {
+tab:not([zen-essential], [zen-glance-tab="true"]) .tab-reset-button,
+#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab:not([zen-essential], [zen-glance-tab="true"]) .tab-reset-pin-button {
   animation: none !important;
   display: none !important;
 }
@@ -389,6 +392,16 @@ tab:not([zen-essential], [zen-glance-tab="true"]):not([pinned]) .tab-close-butto
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
 #zen-tabs-wrapper
 tab:not([zen-essential], [zen-glance-tab="true"]):not([pinned]) .tab-close-button {
+  animation: none;
+  display: unset;
+}
+
+#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#zen-tabs-wrapper
+tab:not([zen-essential], [zen-glance-tab="true"]) .tab-reset-pin-button,
+#navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
+#zen-tabs-wrapper
+tab:not([zen-essential], [zen-glance-tab="true"]) .tab-reset-pin-button {
   animation: none;
   display: unset;
 }
