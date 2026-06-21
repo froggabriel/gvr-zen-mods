@@ -6,9 +6,9 @@ Sorts inactive unpinned tabs to the bottom of the workspace list when the sideba
 
 Companion for `zen-sidebar-expand-on-hover`.
 
-![Registry preview (600×400)](screenshot.png?v=1)
+![Registry preview — before / after side-by-side (600×400)](screenshot.png?v=3)
 
-Expanded sidebar — loaded tabs above, inactive tabs dimmed at the bottom.
+Expanded sidebar — inactive tabs move to the bottom (right).
 
 ## Preferences
 

@@ -6,9 +6,9 @@ Keeps all loaded (non-pending) pinned tabs visible as icons in the rail when a w
 
 Companion for `zen-sidebar-expand-on-hover`.
 
-![Registry preview (600×400)](screenshot.png?v=1)
+![Registry preview — before / after side-by-side (600×400)](screenshot.png?v=3)
 
-## Behavior
+Expanded workspace with pins (left) → collapsed rail keeps both icons (right).
 
 When the workspace pinned section is collapsed, only non-pending pinned tab icons are shown. Folder labels and pending tabs are hidden.
 
