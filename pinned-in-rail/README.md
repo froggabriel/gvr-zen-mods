@@ -6,7 +6,7 @@ Keeps all loaded (non-pending) pinned tabs visible as icons in the rail when a w
 
 Companion for `zen-sidebar-expand-on-hover`.
 
-![Registry preview (600×400)](screenshot.png)
+![Registry preview (600×400)](screenshot.png?v=1)
 
 ## Behavior
 

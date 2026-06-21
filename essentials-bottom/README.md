@@ -4,7 +4,7 @@
 
 Moves essentials tabs to the bottom of the vertical sidebar, below workspace tabs.
 
-![Registry preview (600×400)](screenshot.png)
+![Registry preview (600×400)](screenshot.png?v=1)
 
 ## Screenshots
 

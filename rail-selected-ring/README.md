@@ -6,7 +6,7 @@ Collapsed sidebar rail: subtle tile backgrounds + straight cap bars on selected 
 
 Companion for `tab-containers` and expand-on-hover. Install after tab-containers.
 
-![Registry preview (600×400)](screenshot.png)
+![Registry preview (600×400)](screenshot.png?v=1)
 
 ## Mod settings
 

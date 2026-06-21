@@ -6,7 +6,7 @@ Keeps essentials-style tile backgrounds on workspace pinned and normal tabs in t
 
 Companion for `zen-sidebar-expand-on-hover`, which clips non-essential tab backgrounds down to favicon-only slivers when the sidebar is collapsed. Works well with `essentials-bottom`.
 
-![Registry preview (600×400)](screenshot.png)
+![Registry preview (600×400)](screenshot.png?v=1)
 
 ## Behavior
 

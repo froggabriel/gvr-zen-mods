@@ -6,7 +6,7 @@ Fixes pinned folder-tab icon alignment in the collapsed rail when workspace sect
 
 Companion for `zen-sidebar-expand-on-hover`.
 
-![Registry preview (600×400)](screenshot.png)
+![Registry preview (600×400)](screenshot.png?v=1)
 
 ## Screenshots
 
