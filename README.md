@@ -4,7 +4,7 @@ Small CSS utility mods for [Zen Browser](https://zen-browser.app). Each rail mod
 
 **[clean-sidebar-header](clean-sidebar-header/)** is different: no dependency on eoh or any other mod here — install it alone anytime.
 
-![Ship stack demo — collapsed rail, hover expand, collapse](docs/demo.gif)
+![Ship stack demo — collapsed rail, hover expand, collapse](docs/demo.gif?v=3)
 
 ## Mods
 
