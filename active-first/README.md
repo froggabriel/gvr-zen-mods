@@ -8,6 +8,8 @@ Companion for `zen-sidebar-expand-on-hover`.
 
 ![Registry preview (600×400)](screenshot.png)
 
+Expanded sidebar — loaded tabs above, inactive tabs dimmed at the bottom.
+
 ## Preferences
 
 - **Hide inactive tabs in rail** (`hide_inactive_in_rail`, default: on) — inactive unpinned tabs are hidden in the collapsed sidebar and revealed on hover expand.
