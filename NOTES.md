@@ -2,9 +2,7 @@
 
 ## What this repo is
 
-CSS utility mods for [Zen Browser](https://zen-browser.app) — **Zen Mods = CSS only** per [official docs](https://docs.zen-browser.app/user-manual/extensions). Installed via `install.py` into **Default (release)** → `chrome/zen-themes/<mod-id>/` + patch **`zen-themes.css`**.
-
-**Version source of truth:** each mod’s `manifest.json`. Optional JS (`tab-containers/rail-pending.uc.js`) is fx-autoconfig only — not the Zen Mods loader path.
+CSS utility mods for [Zen Browser](https://zen-browser.app) — **Zen Mods = CSS only** per [official docs](https://docs.zen-browser.app/user-manual/extensions). **Version source of truth:** each mod’s `manifest.json`. Install/uninstall via `install.py` → **Default (release)** profile → `chrome/zen-themes/<mod-id>/` + patch **`zen-themes.css`**.
 
 ## External dependency (not in this repo)
 

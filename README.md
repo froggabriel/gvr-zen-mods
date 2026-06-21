@@ -29,6 +29,8 @@ Companions for **Sidebar Expand on Hover** (not in this repo). Recommended bundl
 ```bash
 python3 install.py              # all mods in this repo
 python3 install.py tab-containers   # one mod
+python3 install.py --uninstall tab-containers   # remove one mod
+python3 install.py --uninstall   # remove all mods from this repo
 ```
 
 **Sidebar Expand on Hover** — install from the [GitHub repo](https://github.com/StormAnon/zen-sidebar-expand-on-hover) or Zen Mods UI **before** the rail companions. Individual mods: `python3 install.py <mod-id>`. See bundle order above and root `NOTES.md`.

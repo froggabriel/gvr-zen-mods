@@ -14,7 +14,7 @@ MODS = [
     {"id": "pin-align", "files": ["chrome.css"]},
     {"id": "active-first", "files": ["chrome.css", "preferences.json"]},
     {"id": "essentials-bottom", "files": ["chrome.css"]},
-    {"id": "tab-containers", "files": ["chrome.css"], "js": "rail-pending.uc.js"},
+    {"id": "tab-containers", "files": ["chrome.css"]},
     {"id": "rail-selected-ring", "files": ["chrome.css", "preferences.json"]},
 ]
 
@@ -187,21 +187,79 @@ def refresh_zen_themes_css(profile, mod):
     print("  Patched zen-themes.css")
 
 
-def install_rail_pending_js(profile):
-    src = os.path.join(REPO_DIR, "tab-containers", "rail-pending.uc.js")
-    if not os.path.isfile(src):
+LEGACY_RAIL_PENDING_JS = "tab-containers-rail-pending.uc.js"
+
+
+def mod_marker(mod):
+    return f"/* Name: {mod['entry']['name']} */"
+
+
+def remove_from_zen_themes_css(profile, mod):
+    css_path = os.path.join(profile, "chrome", "zen-themes.css")
+    if not os.path.isfile(css_path):
         return
 
-    chrome_dir = os.path.join(profile, "chrome")
-    fx_utils = os.path.join(chrome_dir, "utils", "chrome.manifest")
-    if not os.path.isfile(fx_utils):
-        print("  Note: optional fx-autoconfig hold script skipped (no chrome/utils/)")
+    marker = mod_marker(mod)
+    with open(css_path, encoding="utf-8") as f:
+        content = f.read()
+    if marker not in content:
+        print("  Not in zen-themes.css")
         return
 
-    js_dir = os.path.join(chrome_dir, "JS")
-    os.makedirs(js_dir, exist_ok=True)
-    shutil.copy2(src, os.path.join(js_dir, "tab-containers-rail-pending.uc.js"))
-    print("  Installed tab-containers-rail-pending.uc.js (fx-autoconfig)")
+    start = content.index(marker)
+    rest = content[start + len(marker) :]
+    next_idx = rest.find("\n/* Name: ")
+    end = start + len(marker) + (next_idx if next_idx != -1 else len(rest))
+    content = (content[:start] + content[end:]).lstrip("\n")
+    with open(css_path, "w", encoding="utf-8") as f:
+        f.write(content)
+    print("  Removed from zen-themes.css")
+
+
+def remove_legacy_rail_pending_js(profile):
+    path = os.path.join(profile, "chrome", "JS", LEGACY_RAIL_PENDING_JS)
+    if os.path.isfile(path):
+        os.remove(path)
+        print(f"  Removed {LEGACY_RAIL_PENDING_JS} (legacy fx-autoconfig)")
+
+
+def uninstall_mod(mod):
+    mod_id = mod["id"]
+    profiles = zen_profiles()
+    if not profiles:
+        print("No Zen Browser profiles found.")
+        return False
+
+    for profile in profiles:
+        print(f"Uninstalling {mod_id} from profile: {os.path.basename(profile)}...")
+
+        themes_json_path = os.path.join(profile, "zen-themes.json")
+        themes_data = {}
+        if os.path.exists(themes_json_path):
+            try:
+                with open(themes_json_path, encoding="utf-8") as f:
+                    themes_data = json.load(f)
+            except Exception as e:
+                print(f"  Warning: failed to read zen-themes.json ({e}).")
+
+        themes_key = resolve_themes_key(themes_data, mod) if themes_data else mod_id
+        if themes_key in themes_data:
+            del themes_data[themes_key]
+            with open(themes_json_path, "w", encoding="utf-8") as f:
+                json.dump(themes_data, f, indent=2, ensure_ascii=False)
+            print(f"  Removed from zen-themes.json ({themes_key})")
+
+        for key in {themes_key, mod_id}:
+            dest_dir = os.path.join(profile, "chrome", "zen-themes", key)
+            if os.path.isdir(dest_dir):
+                shutil.rmtree(dest_dir)
+                print(f"  Removed chrome/zen-themes/{key}/")
+
+        remove_from_zen_themes_css(profile, mod)
+        if mod_id == "tab-containers":
+            remove_legacy_rail_pending_js(profile)
+
+    return True
 
 
 def install_mod(mod):
@@ -263,9 +321,6 @@ def install_mod(mod):
         if entry.get("enabled", True):
             refresh_zen_themes_css(profile, mod)
 
-        if mod["id"] == "tab-containers":
-            install_rail_pending_js(profile)
-
     return True
 
 
@@ -275,19 +330,22 @@ def main():
             print(path)
         return
 
-    ids = [a for a in sys.argv[1:] if a != "--profile"]
+    uninstall = "--uninstall" in sys.argv
+    ids = [a for a in sys.argv[1:] if a not in ("--profile", "--uninstall")]
     ids = ids or [m["id"] for m in MODS]
     by_id = {m["id"]: m for m in MODS}
+    action = uninstall_mod if uninstall else install_mod
+    label = "Uninstall" if uninstall else "Done"
     ok = True
     for mod_id in ids:
         if mod_id not in by_id:
             print(f"Unknown mod: {mod_id}")
             ok = False
             continue
-        ok = install_mod(by_id[mod_id]) and ok
+        ok = action(by_id[mod_id]) and ok
 
     if ok:
-        print("\nDone. Quit Zen (Cmd+Q), reopen, then apply.")
+        print(f"\n{label}. Quit Zen (Cmd+Q), reopen, then apply.")
     else:
         sys.exit(1)
 

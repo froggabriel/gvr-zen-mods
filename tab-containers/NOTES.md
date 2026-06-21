@@ -57,7 +57,7 @@ Native `.tab-context-line` on `.tab-background`. tab-containers does not paint s
 - `.tab-background { clip-path: none !important; width: -moz-available; … }`
 - expand-on-hover container clip exemption (non-container tabs only)
 
-**#2 tradeoff:** immediate pinned bg cap = steady edge ✓, stripe snaps on unhover ✗. Delayed cap attempts (v1.0.47–48, v1.0.50) and eoh v1.0.12 reverted. CSS-only #2 exhausted; optional `rail-pending.uc.js` (fx-autoconfig, off Zen Mods model).
+**#2 tradeoff:** immediate pinned bg cap = steady edge ✓, stripe snaps on unhover ✗. Delayed cap attempts (v1.0.47–48, v1.0.50) and eoh v1.0.12 reverted. CSS-only #2 exhausted; instant collapse shipped.
 
 ## Hold architecture
 
@@ -72,10 +72,6 @@ Do not bundle: eoh always-expanded pinned section + tc hold; instant pinned labe
 - `background:` shorthand in hold keyframes
 - `margin-inline: auto` on tabs; synthetic `::after` / box-shadow stripe hacks
 - pinned-in-rail Case E `width:100%` on folder container tabs (fights tile width)
-
-## Optional JS (off-model)
-
-`rail-pending.uc.js` sets `data-rail-pending` during collapse delay; eoh has CSS hooks. `install.py` copies to fx-autoconfig only if `chrome/utils/` exists.
 
 ## Known follow-ups
 

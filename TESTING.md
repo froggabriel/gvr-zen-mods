@@ -142,7 +142,6 @@ Re-run **TC-RSR-01..03** and **TC-RSR-04** under each row where relevant.
 |----|------|--------|
 | TC-OPEN-01 | Folder rename + mouse leaves sidebar | Sidebar collapses while folder name input focused — **unfixed** (eoh/upstream) |
 | TC-OPT-01 | `active-first` | Optional mod — inactive tabs hidden in rail when pref on |
-| TC-OPT-02 | `rail-pending.uc.js` | fx-autoconfig only; not Zen Mods path — skip unless autoconfig installed |
 
 ---
 
