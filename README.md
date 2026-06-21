@@ -21,11 +21,10 @@ Companions for **`zen-sidebar-expand-on-hover`** (external fork). Recommended sh
 ## Install
 
 ```bash
-python3 install.py                              # all mods (expand-on-hover first)
-python3 install.py zen-sidebar-expand-on-hover  # fork only
-python3 install.py tab-containers               # one gvr mod
+python3 install.py              # all mods in this repo
+python3 install.py tab-containers   # one mod
 ```
 
-Expand-on-hover source: `~/Repos/zen-sidebar-expand-on-hover` (sibling repo, not in this tree).
+**expand-on-hover** is not in this repo — install from `~/Repos/zen-sidebar-expand-on-hover` (or Zen Mods UI) **before** these companions. See ship stack order in root `NOTES.md`.
 
 Restart Zen Browser after installing.

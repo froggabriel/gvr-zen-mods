@@ -5,14 +5,14 @@
 ## Install stack (order matters)
 
 ```bash
-python3 install.py zen-sidebar-expand-on-hover pinned-in-rail pin-align essentials-bottom tab-containers rail-selected-ring
+python3 install.py pinned-in-rail pin-align essentials-bottom tab-containers rail-selected-ring
 ```
 
 Cmd+Q, reopen. **tab-containers** loads before **rail-selected-ring** (last wins on tile tint/selection).
 
 | Mod | Version | Role |
 |-----|---------|------|
-| expand-on-hover | v1.0.11-gvr | Primary hold clock, pinned section collapsed default |
+| expand-on-hover | v1.0.11-gvr | **External** — install first; primary hold clock, pinned section collapsed default |
 | pinned-in-rail | v1.0.1 | Pinned tabs visible when workspace section collapsed |
 | pin-align | v1.0.4 | Folder-tab icon alignment in collapsed pins |
 | essentials-bottom | v1.0.8 | Essentials under workspace tabs |

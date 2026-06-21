@@ -1,19 +1,14 @@
 import os
 import json
 import shutil
-import glob
 import sys
+from configparser import ConfigParser
+from pathlib import Path
 
 REPO_DIR = os.path.dirname(os.path.abspath(__file__))
-EXPAND_ON_HOVER_DIR = os.path.join(os.path.dirname(REPO_DIR), "zen-sidebar-expand-on-hover")
 
-# expand-on-hover first — gvr companion mods override its rail clip-path
+# Load order in zen-themes.css matters — tab-containers before rail-selected-ring
 MODS = [
-    {
-        "id": "zen-sidebar-expand-on-hover",
-        "src_dir": EXPAND_ON_HOVER_DIR,
-        "files": ["chrome.css", "preferences.json"],
-    },
     {"id": "clean-sidebar-header", "files": ["chrome.css"]},
     {"id": "pinned-in-rail", "files": ["chrome.css"]},
     {"id": "pin-align", "files": ["chrome.css"]},
@@ -45,35 +40,112 @@ def load_mod(mod):
 
 
 def resolve_themes_key(themes_data, mod):
-    """Keep existing zen-themes.json key (e.g. theme-store UUID) when names match."""
-    if mod["id"] != "zen-sidebar-expand-on-hover":
-        return mod["id"]
+    """Keep existing zen-themes.json key when id or display name matches."""
     for key, existing in themes_data.items():
-        if existing.get("name") == mod["entry"]["name"] or key == mod["id"]:
+        if key == mod["id"] or existing.get("name") == mod["entry"]["name"]:
             return key
     return mod["id"]
 
 
 MODS = [load_mod(m) for m in MODS]
 
-ZEN_PROFILES_DIR = os.path.expanduser("~/Library/Application Support/zen/Profiles")
+
+def zen_data_roots():
+    """Zen app-data dirs that contain profiles.ini (Firefox-style layout)."""
+    home = Path.home()
+    candidates = []
+    if sys.platform == "darwin":
+        candidates.append(home / "Library/Application Support/zen")
+    elif sys.platform == "win32":
+        appdata = os.environ.get("APPDATA")
+        if appdata:
+            candidates.append(Path(appdata) / "zen")
+    else:
+        candidates.extend(
+            [
+                home / ".var/app/app.zen_browser.zen/.zen",
+                home / ".config/zen",
+                home / ".zen",
+            ]
+        )
+    return [p for p in candidates if (p / "profiles.ini").is_file()]
+
+
+def profiles_from_ini(data_root):
+    """Return profile entries from profiles.ini: name, path (absolute), is_default."""
+    ini = ConfigParser()
+    ini.read(data_root / "profiles.ini", encoding="utf-8")
+
+    install_default = None
+    for section in ini.sections():
+        if section.startswith("Install") and ini.has_option(section, "Default"):
+            install_default = ini.get(section, "Default")
+            break
+
+    profiles = []
+    for section in ini.sections():
+        if not section.startswith("Profile"):
+            continue
+        rel = ini.get(section, "Path", fallback="")
+        if not rel:
+            continue
+        is_relative = ini.get(section, "IsRelative", fallback="1") == "1"
+        path = (data_root / rel).resolve() if is_relative else Path(rel).expanduser().resolve()
+        name = ini.get(section, "Name", fallback=path.name)
+        is_default = ini.get(section, "Default", fallback="0") == "1"
+        profiles.append({"name": name, "path": str(path), "default": is_default})
+
+    default_path = None
+    if install_default:
+        default_path = str((data_root / install_default).resolve())
+    elif profiles:
+        marked = [p["path"] for p in profiles if p["default"]]
+        default_path = marked[0] if marked else None
+
+    return profiles, default_path
 
 
 def zen_profiles():
-    """Install to release profile only; override with ZEN_PROFILE=substring."""
-    all_profiles = [
-        p for p in glob.glob(os.path.join(ZEN_PROFILES_DIR, "*")) if os.path.isdir(p)
-    ]
-    if not all_profiles:
+    """Resolve install target(s) from profiles.ini; override with env vars."""
+    explicit = os.environ.get("ZEN_PROFILE_PATH")
+    if explicit:
+        path = Path(explicit).expanduser()
+        if path.is_dir():
+            return [str(path.resolve())]
+        print(f"ZEN_PROFILE_PATH not found: {path}")
+        return []
+
+    roots = zen_data_roots()
+    if not roots:
+        return []
+
+    all_profiles = []
+    default_paths = []
+    for root in roots:
+        profiles, default_path = profiles_from_ini(root)
+        all_profiles.extend(profiles)
+        if default_path:
+            default_paths.append(default_path)
+
+    paths = [p["path"] for p in all_profiles]
+    if not paths:
         return []
 
     override = os.environ.get("ZEN_PROFILE")
     if override:
-        matched = [p for p in all_profiles if override in os.path.basename(p)]
-        return matched or all_profiles
+        matched = [
+            p["path"]
+            for p in all_profiles
+            if override in p["name"] or override in os.path.basename(p["path"])
+        ]
+        return matched or paths
 
-    release = [p for p in all_profiles if "(release)" in os.path.basename(p)]
-    return release or all_profiles
+    for dp in default_paths:
+        if dp in paths:
+            return [dp]
+
+    release = [p for p in paths if "(release)" in os.path.basename(p)]
+    return release or paths
 
 
 def refresh_zen_themes_css(profile, mod):
@@ -198,7 +270,13 @@ def install_mod(mod):
 
 
 def main():
-    ids = sys.argv[1:] or [m["id"] for m in MODS]
+    if "--profile" in sys.argv:
+        for path in zen_profiles():
+            print(path)
+        return
+
+    ids = [a for a in sys.argv[1:] if a != "--profile"]
+    ids = ids or [m["id"] for m in MODS]
     by_id = {m["id"]: m for m in MODS}
     ok = True
     for mod_id in ids:

@@ -11,14 +11,14 @@ Versions come from each mod’s `manifest.json` at test time. Re-run after any c
 | Item | Requirement |
 |------|-------------|
 | Browser | Zen Browser (vertical sidebar) |
-| Profile | `Default (release)` unless testing with `ZEN_PROFILE=…` |
-| expand-on-hover | GVR fork `~/Repos/zen-sidebar-expand-on-hover` · **v1.0.11-gvr** |
-| Install order | eoh → pinned-in-rail → pin-align → essentials-bottom → tab-containers → **rail-selected-ring last** |
+| Profile | From `profiles.ini` default install; `ZEN_PROFILE=…` or `ZEN_PROFILE_PATH=…` to override |
+| expand-on-hover | GVR fork `~/Repos/zen-sidebar-expand-on-hover` · **v1.0.11-gvr** — install separately, **before** `install.py` |
+| Install order | eoh (external) → pinned-in-rail → pin-align → essentials-bottom → tab-containers → **rail-selected-ring last** |
 | Restart | **Cmd+Q** quit, reopen — reload is not enough after `install.py` |
 
 ```bash
 cd ~/Repos/gvr-zen-mods
-python3 install.py zen-sidebar-expand-on-hover pinned-in-rail pin-align essentials-bottom tab-containers rail-selected-ring
+python3 install.py pinned-in-rail pin-align essentials-bottom tab-containers rail-selected-ring
 ```
 
 ### Test data (minimum)

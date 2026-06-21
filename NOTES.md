@@ -8,7 +8,7 @@ CSS utility mods for [Zen Browser](https://zen-browser.app) — **Zen Mods = CSS
 
 ## External dependency (not in this repo)
 
-**`zen-sidebar-expand-on-hover`** — fork at `~/Repos/zen-sidebar-expand-on-hover` (froggabriel lineage). GVR patch: collapsed favicon margins scoped to `:not(:hover)` with `--transition-delay-fast`. Install via `python3 install.py zen-sidebar-expand-on-hover` (listed first in full install).
+**`zen-sidebar-expand-on-hover`** — fork at `~/Repos/zen-sidebar-expand-on-hover` (froggabriel lineage). **Not installed by `install.py`** — install separately, first in the stack.
 
 Most GVR mods are **companions** that fix rail UX on top of that model.
 
@@ -42,7 +42,7 @@ python3 install.py tab-containers   # one mod
 
 Restart Zen after install.
 
-**Profile:** `install.py` targets `Default (release)` only. Override: `ZEN_PROFILE=substring python3 install.py …`.
+**Profile:** `install.py` reads Zen’s `profiles.ini` (default install profile). Override: `ZEN_PROFILE=substring` (name or path) or `ZEN_PROFILE_PATH=/full/path`. Debug: `python3 install.py --profile`.
 
 ## Per-mod deep dives
 
