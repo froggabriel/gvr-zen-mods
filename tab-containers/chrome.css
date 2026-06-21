@@ -1,4 +1,4 @@
-/* tab-containers v1.0.58 — tile geometry; folder indent scoped by section */
+/* tab-containers v1.0.60 — tile geometry; folder indent scoped by section */
 
 /* ponytail: shared transition for collapsed↔expanded bg handoff */
 #navigator-toolbox #zen-tabs-wrapper
@@ -478,4 +478,34 @@ zen-folder .tab-group-container
 tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background {
   width: -moz-available !important;
   max-width: 100% !important;
+}
+
+/* Expanded: workspace pseudo-tab — match tab row inset (eoh: full arrowscrollbox width + collapsed padding) */
+#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+.zen-current-workspace-indicator,
+#navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
+.zen-current-workspace-indicator {
+  box-sizing: border-box !important;
+  margin-inline: var(--tab-block-margin) !important;
+  width: calc(100% - 2 * var(--tab-block-margin)) !important;
+  max-width: calc(var(--expanded-tab-bar-width) - 2 * var(--tab-block-margin)) !important;
+  /* ponytail: beat eoh collapsed-centering padding; native uses padding-right: 12px for ⋯ menu */
+  padding-block: calc(3px + var(--tab-inline-padding, 8px)) !important;
+  padding-inline-start: var(--tab-inline-padding, 8px) !important;
+  padding-inline-end: 12px !important;
+}
+
+#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+.zen-current-workspace-indicator::before,
+#navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
+.zen-current-workspace-indicator::before {
+  left: 0 !important;
+  width: 100% !important;
+}
+
+#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+.zen-current-workspace-indicator .zen-workspaces-actions image,
+#navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
+.zen-current-workspace-indicator .zen-workspaces-actions image {
+  margin-inline-end: 2px !important; /* beat Zen native -1px — menu was flush with pill edge */
 }

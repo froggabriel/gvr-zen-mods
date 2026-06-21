@@ -1,4 +1,4 @@
-/* active-first v1.0.0
+/* active-first v1.0.1
 
    Rail: active tabs on top, inactive hidden (configurable).
    Hover: inactive tabs revealed at bottom, disappearing after sidebar collapses.
@@ -28,7 +28,8 @@
     tab[pending="true"]:not([zen-essential]):not([pinned]),
     #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
     tab[pending="true"]:not([zen-essential]):not([pinned]) {
-      max-height: 35px !important;
+      max-height: calc(var(--tab-min-height) + 2 * var(--tab-block-margin)) !important;
+      min-height: var(--tab-min-height) !important;
       overflow: visible !important;
       transition: max-height var(--transition-duration, 200ms) ease 0ms !important;
     }

@@ -2,7 +2,7 @@
   "id": "active-first",
   "name": "[GVR] Active First",
   "description": "Rail: active tabs on top, inactive dimmed below. Expanded: inactive tabs hidden.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "gvidaurr",
   "theme": "chrome.css",
   "preferences": "preferences.json",
