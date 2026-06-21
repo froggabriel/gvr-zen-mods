@@ -1,10 +1,12 @@
 # [GVR] Rail Selected Ring
 
-**Version:** 1.3.1
+**Version:** 1.3.3
 
 Collapsed sidebar rail: subtle tile backgrounds + straight cap bars on selected tabs.
 
-Companion for `tab-containers` and expand-on-hover.
+Companion for `tab-containers` and expand-on-hover. Install after tab-containers.
+
+![Registry preview (600×400)](screenshot.png)
 
 ## Mod settings
 
@@ -17,6 +19,14 @@ Open **Zen Mods** → **[GVR] Rail Selected Ring**.
 **Caps:** eight independent edge toggles — four for **Selected** (default on) and four for **Unselected** (default off).
 
 Container tabs use identity color for caps; **right cap** on a left sidebar controls the native container stripe.
+
+## Screenshots
+
+**Before** uses the tab-containers stack only (tiles + stripes, no cap bars). **After** adds tile tint and straight cap bars on the selected tab.
+
+| Before (tab-containers only) | After (collapsed rail) |
+|---|---|
+| ![Before](before.png) | ![After](after.png) |
 
 ## Install
 
