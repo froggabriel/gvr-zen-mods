@@ -12,7 +12,7 @@ Cmd+Q, reopen. **tab-containers** loads before **rail-selected-ring** (last wins
 
 | Mod | Version | Role |
 |-----|---------|------|
-| expand-on-hover | v1.0.11-gvr | **External** — install first; primary hold clock, pinned section collapsed default |
+| expand-on-hover | [GVR fork](https://github.com/froggabriel/zen-sidebar-expand-on-hover) v1.0.12-gvr | **External** — install first (`python3 install.py` in that repo); primary hold clock, pinned section collapsed default |
 | pinned-in-rail | v1.0.1 | Pinned tabs visible when workspace section collapsed |
 | pin-align | v1.0.4 | Folder-tab icon alignment in collapsed pins |
 | essentials-bottom | v1.0.8 | Essentials under workspace tabs |

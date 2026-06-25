@@ -6,7 +6,14 @@ CSS utility mods for [Zen Browser](https://zen-browser.app) — **Zen Mods = CSS
 
 ## External dependency (not in this repo)
 
-**`zen-sidebar-expand-on-hover`** — fork at `~/Repos/zen-sidebar-expand-on-hover` (froggabriel lineage). **Not installed by `install.py`** — install separately, first in the stack.
+**[Sidebar Expand on Hover — GVR fork](https://github.com/froggabriel/zen-sidebar-expand-on-hover)** — **not installed by `install.py`**. Install separately, **first** in the stack:
+
+```bash
+git clone https://github.com/froggabriel/zen-sidebar-expand-on-hover.git
+cd zen-sidebar-expand-on-hover && python3 install.py
+```
+
+**Why the fork (for now):** upstream / Zen Mods store eoh expands on sidebar `:hover` only. The fork also treats Zen compact mode’s `[zen-has-hover="true"]` (screen-edge hover) as expanded. GVR rail companions mirror that trigger — store eoh + this repo will desync at the screen edge until upstream merges the patch.
 
 Most GVR mods are **companions** that fix rail UX on top of that model.
 

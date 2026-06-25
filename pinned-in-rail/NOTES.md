@@ -8,7 +8,7 @@ When a workspace’s pinned section is collapsed (`zen-workspace[collapsedpinned
 
 ## Dependency
 
-`zen-sidebar-expand-on-hover` (separate repo: `~/Repos/zen-sidebar-expand-on-hover`). User runs the GVR companion stack documented in root `README.md`.
+[`zen-sidebar-expand-on-hover` GVR fork](https://github.com/froggabriel/zen-sidebar-expand-on-hover) (separate repo). User runs the GVR companion stack documented in root `README.md`.
 
 ## Root cause (why Zen hides pins)
 

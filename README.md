@@ -1,6 +1,6 @@
 # gvr-zen-mods
 
-Small CSS utility mods for [Zen Browser](https://zen-browser.app). Each rail mod is meant to be **independent and useful on its own** — install only what you need. In practice those mods share assumptions today (especially with [Sidebar Expand on Hover](https://github.com/StormAnon/zen-sidebar-expand-on-hover/tree/main)), so they work **best installed as a bundle** in the order below.
+Small CSS utility mods for [Zen Browser](https://zen-browser.app). Each rail mod is meant to be **independent and useful on its own** — install only what you need. In practice those mods share assumptions today (especially with [Sidebar Expand on Hover](https://github.com/froggabriel/zen-sidebar-expand-on-hover)), so they work **best installed as a bundle** in the order below.
 
 **[clean-sidebar-header](clean-sidebar-header/)** is different: no dependency on eoh or any other mod here — install it alone anytime.
 
@@ -26,6 +26,18 @@ Companions for **Sidebar Expand on Hover** (not in this repo). Recommended bundl
 
 ## Install
 
+**1. Sidebar Expand on Hover (external, install first)**
+
+For now use the **[GVR fork](https://github.com/froggabriel/zen-sidebar-expand-on-hover)** — not the Zen Mods store / [StormAnon upstream](https://github.com/StormAnon/zen-sidebar-expand-on-hover). The fork adds screen-edge expand (`zen-has-hover`); the rail companions in this repo sync to that trigger. Upstream eoh still expands on sidebar hover only.
+
+```bash
+git clone https://github.com/froggabriel/zen-sidebar-expand-on-hover.git
+cd zen-sidebar-expand-on-hover
+python3 install.py
+```
+
+**2. Rail companions (this repo)**
+
 ```bash
 python3 install.py              # all mods in this repo
 python3 install.py tab-containers   # one mod
@@ -33,6 +45,6 @@ python3 install.py --uninstall tab-containers   # remove one mod
 python3 install.py --uninstall   # remove all mods from this repo
 ```
 
-**Sidebar Expand on Hover** — install from the [GitHub repo](https://github.com/StormAnon/zen-sidebar-expand-on-hover) or Zen Mods UI **before** the rail companions. Individual mods: `python3 install.py <mod-id>`. See bundle order above and root `NOTES.md`.
+Bundle order: `expand-on-hover` → `pin-align` → `active-first` → `essentials-bottom` → `pinned-in-rail` → `tab-containers` → `rail-selected-ring`. See root `NOTES.md`.
 
-Restart Zen Browser after installing.
+Restart Zen Browser after installing (Cmd+Q, not reload).
