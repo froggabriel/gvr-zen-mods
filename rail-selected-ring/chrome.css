@@ -78,7 +78,7 @@ tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-back
   transition: background-color var(--transition-duration) ease !important;
 }
 
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"]):not(:hover) .tab-background {
   animation: none !important;
@@ -86,7 +86,7 @@ tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visu
   border: none !important;
 }
 
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"]) .tab-background {
   animation: none !important;
@@ -94,7 +94,7 @@ tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visua
 }
 
 /* Selected — container top/bottom */
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
 .tab-background::before {
@@ -109,7 +109,7 @@ tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="tr
   z-index: 1 !important;
 }
 
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
 .tab-background::after {
@@ -125,7 +125,7 @@ tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="tr
 }
 
 /* Selected — container painted side */
-#navigator-toolbox:not([zen-right-side="true"]):not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not([zen-right-side="true"]):not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
 .tab-background {
@@ -136,7 +136,7 @@ tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="tr
   border: none !important;
 }
 
-#navigator-toolbox[zen-right-side="true"]:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox[zen-right-side="true"]:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
 .tab-background {
@@ -148,7 +148,7 @@ tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="tr
 }
 
 @media (-moz-pref("mod.gvr-rail-selected-ring.cap_right", false)) {
-  #navigator-toolbox:not([zen-right-side="true"]):not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+  #navigator-toolbox:not([zen-right-side="true"]):not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
   #zen-tabs-wrapper
   tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
   .tab-context-line {
@@ -157,7 +157,7 @@ tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="tr
 }
 
 @media (-moz-pref("mod.gvr-rail-selected-ring.cap_left", false)) {
-  #navigator-toolbox[zen-right-side="true"]:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+  #navigator-toolbox[zen-right-side="true"]:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
   #zen-tabs-wrapper
   tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
   .tab-context-line {
@@ -166,7 +166,7 @@ tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="tr
 }
 
 /* Selected — non-container sides + tile */
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
 .tab-background {
@@ -184,7 +184,7 @@ tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="
   background-repeat: no-repeat !important;
 }
 
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
 .tab-background::before {
@@ -199,7 +199,7 @@ tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="
   z-index: 1 !important;
 }
 
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):is([visuallyselected], [multiselected="true"])
 .tab-background::after {
@@ -215,7 +215,7 @@ tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="
 }
 
 /* Unselected — container top/bottom (height 0 when pref off) */
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
 .tab-background::before {
@@ -230,7 +230,7 @@ tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="tr
   z-index: 1 !important;
 }
 
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
 .tab-background::after {
@@ -246,7 +246,7 @@ tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="tr
 }
 
 /* Unselected — container painted side */
-#navigator-toolbox:not([zen-right-side="true"]):not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not([zen-right-side="true"]):not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
 .tab-background {
@@ -256,7 +256,7 @@ tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="tr
   background-repeat: no-repeat !important;
 }
 
-#navigator-toolbox[zen-right-side="true"]:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox[zen-right-side="true"]:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
 .tab-background {
@@ -269,7 +269,7 @@ tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="tr
 /* Unselected container: hide native stripe when any unsel cap on but unsel right off */
 @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_right", false)) {
   @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_top")) {
-    #navigator-toolbox:not([zen-right-side="true"]):not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+    #navigator-toolbox:not([zen-right-side="true"]):not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
     #zen-tabs-wrapper
     tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
     .tab-context-line {
@@ -277,7 +277,7 @@ tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="tr
     }
   }
   @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_bottom")) {
-    #navigator-toolbox:not([zen-right-side="true"]):not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+    #navigator-toolbox:not([zen-right-side="true"]):not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
     #zen-tabs-wrapper
     tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
     .tab-context-line {
@@ -285,7 +285,7 @@ tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="tr
     }
   }
   @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_left")) {
-    #navigator-toolbox:not([zen-right-side="true"]):not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+    #navigator-toolbox:not([zen-right-side="true"]):not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
     #zen-tabs-wrapper
     tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
     .tab-context-line {
@@ -296,7 +296,7 @@ tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="tr
 
 @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_left", false)) {
   @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_top")) {
-    #navigator-toolbox[zen-right-side="true"]:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+    #navigator-toolbox[zen-right-side="true"]:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
     #zen-tabs-wrapper
     tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
     .tab-context-line {
@@ -304,7 +304,7 @@ tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="tr
     }
   }
   @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_bottom")) {
-    #navigator-toolbox[zen-right-side="true"]:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+    #navigator-toolbox[zen-right-side="true"]:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
     #zen-tabs-wrapper
     tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
     .tab-context-line {
@@ -312,7 +312,7 @@ tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="tr
     }
   }
   @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_right")) {
-    #navigator-toolbox[zen-right-side="true"]:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+    #navigator-toolbox[zen-right-side="true"]:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
     #zen-tabs-wrapper
     tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
     .tab-context-line {
@@ -322,7 +322,7 @@ tab[usercontextid]:not([zen-essential], [split-view="true"], [zen-glance-tab="tr
 }
 
 /* Unselected — non-container (side caps need square tile) */
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
 .tab-background {
@@ -337,7 +337,7 @@ tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="
 }
 
 @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_left")) {
-  #navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+  #navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
   #zen-tabs-wrapper
   tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
   .tab-background {
@@ -349,7 +349,7 @@ tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="
 }
 
 @media (-moz-pref("mod.gvr-rail-selected-ring.cap_unsel_right")) {
-  #navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+  #navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
   #zen-tabs-wrapper
   tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
   .tab-background {
@@ -360,7 +360,7 @@ tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="
   }
 }
 
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
 .tab-background::before {
@@ -375,7 +375,7 @@ tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="
   z-index: 1 !important;
 }
 
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="true"]):not([visuallyselected], [multiselected="true"])
 .tab-background::after {
@@ -391,10 +391,10 @@ tab:not([usercontextid], [zen-essential], [split-view="true"], [zen-glance-tab="
 }
 
 @media not (-moz-pref("mod.gvr-rail-selected-ring.hover_match_style")) {
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background::before,
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background::after,
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
@@ -406,7 +406,7 @@ tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-back
   content: none !important;
 }
 
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background,
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))

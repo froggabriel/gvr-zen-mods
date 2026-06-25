@@ -1,4 +1,4 @@
-/* pin-align v1.0.4
+/* pin-align v1.0.6
 
    Keeps pinned folder-tab icons aligned with other pinned tabs when the
    workspace pinned section is collapsed. Without labels, folder tabs should
@@ -46,6 +46,35 @@ zen-folder .tab-group-container {
 zen-workspace[collapsedpinnedtabs]
 vbox.zen-workspace-pinned-tabs-section
 zen-folder .tab-group-container {
+  transform: translateX(0) !important;
+  padding-inline-start: 0 !important;
+}
+
+/* ponytail: native tab-group — flat like top-level pins, not folder translateX */
+zen-workspace[collapsedpinnedtabs]
+vbox.zen-workspace-pinned-tabs-section
+tab-group {
+  margin-inline-start: 0 !important;
+}
+
+zen-workspace[collapsedpinnedtabs]
+vbox.zen-workspace-pinned-tabs-section
+tab-group .tab-group-container > * {
+  margin-inline-start: 0 !important;
+}
+
+#navigator-toolbox:not([zen-right-side="true"])
+zen-workspace[collapsedpinnedtabs]
+vbox.zen-workspace-pinned-tabs-section
+tab-group .tab-group-container {
+  transform: translateX(0) !important;
+  padding-inline-end: 0 !important;
+}
+
+#navigator-toolbox[zen-right-side="true"]
+zen-workspace[collapsedpinnedtabs]
+vbox.zen-workspace-pinned-tabs-section
+tab-group .tab-group-container {
   transform: translateX(0) !important;
   padding-inline-start: 0 !important;
 }

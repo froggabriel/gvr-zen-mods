@@ -1,7 +1,7 @@
-/* pinned-in-rail v1.0.1
+/* pinned-in-rail v1.0.2
    When zen-workspace[collapsedpinnedtabs]: reset spacer margins (Case B),
-   show non-pending tabs (Case A), hide folder labels (Case C) and pending
-   tabs (Case D). */
+   show non-pending tabs (Case A), hide folder labels (Case C), pending
+   tabs (Case D), and keep native tab-group chrome visible (Case F). */
 
 /* Case A: restore natural height/opacity on non-pending tabs */
 vbox.zen-workspace-pinned-tabs-section
@@ -9,12 +9,13 @@ vbox.zen-workspace-pinned-tabs-section
   height: unset !important;
   max-height: unset !important;
   opacity: 1 !important;
+  animation: none !important;
 }
 
-/* Case B: reset all group spacer margins */
+/* Case B: reset group / collapsible spacers */
 zen-workspace[collapsedpinnedtabs]
 vbox.zen-workspace-pinned-tabs-section
-.zen-tab-group-start {
+:is(.zen-tab-group-start, .space-fake-collapsible-start) {
   margin-top: 0 !important;
 }
 
@@ -36,4 +37,20 @@ vbox.zen-workspace-pinned-tabs-section
   max-height: 0 !important;
   opacity: 0 !important;
   overflow: hidden !important;
+}
+
+/* Case F: native tab-group — undo WAAPI hide on group shell, not just tabs */
+zen-workspace[collapsedpinnedtabs]
+vbox.zen-workspace-pinned-tabs-section
+tab-group,
+zen-workspace[collapsedpinnedtabs]
+vbox.zen-workspace-pinned-tabs-section
+tab-group .tab-group-container {
+  margin-top: 0 !important;
+  height: unset !important;
+  min-height: unset !important;
+  max-height: none !important;
+  opacity: 1 !important;
+  overflow: visible !important;
+  animation: none !important;
 }

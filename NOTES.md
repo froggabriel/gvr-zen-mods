@@ -25,8 +25,8 @@ Optional: `active-first`, `clean-sidebar-header` (independent).
 
 1. **Never use `:root:not([zen-sidebar-expanded])`** as collapsed-rail guard when expand-on-hover is active — attribute may be set while visually collapsed.
 2. **Collapsed vs expanded triggers** must mirror expand-on-hover:
-   - Collapsed: `#navigator-toolbox:not(:hover, [has-popup-menu], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open]:not(#zen-sidepanel-button)))`
-   - Expanded: `:is(:hover, …)` or `:has(#urlbar[open], …)`
+   - Collapsed: `#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open]:not(#zen-sidepanel-button)))`
+   - Expanded: `:is(:hover, [zen-has-hover="true"], …)` or `:has(#urlbar[open], …)`
 3. **Timing vars** on `#navigator-toolbox`: `--transition-duration`, `--transition-delay-after`, `--transition-delay-smooth`, `--collapsed-tab-bar-width`, `--expanded-tab-bar-width`.
 4. **Zen folders** (`zen-folder`, `zen-workspace[collapsedpinnedtabs]`) are first-class in current Zen — not “missing Arc folders”.
 5. **ponytail rule:** minimal diffs; mark intentional shortcuts; one runnable check for non-trivial logic.

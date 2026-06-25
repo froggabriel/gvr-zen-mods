@@ -24,7 +24,7 @@
     }
 
     /* Hover: reveal immediately as sidebar expands */
-    #navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+    #navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
     tab[pending="true"]:not([zen-essential]):not([pinned]),
     #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
     tab[pending="true"]:not([zen-essential]):not([pinned]) {

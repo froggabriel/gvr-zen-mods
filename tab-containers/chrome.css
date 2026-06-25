@@ -1,4 +1,4 @@
-/* tab-containers v1.0.60 — tile geometry; folder indent scoped by section */
+/* tab-containers v1.0.63 — tile geometry; folder indent scoped by section */
 
 /* ponytail: shared transition for collapsed↔expanded bg handoff */
 #navigator-toolbox #zen-tabs-wrapper
@@ -7,7 +7,7 @@ tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-back
 }
 
 /* Instant collapse: tab width (normal + pinned) */
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) {
   width: calc(var(--collapsed-tab-bar-width) - 5px) !important;
@@ -15,8 +15,89 @@ tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) {
   animation: none !important;
 }
 
+/* ponytail: vertical-split-tab-groups — split-view tabs in groups skip global exclude above */
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+:is(zen-folder, tab-group) .tab-group-container {
+  width: calc(var(--collapsed-tab-bar-width) - 5px) !important;
+  max-width: calc(var(--collapsed-tab-bar-width) - 5px) !important;
+  box-sizing: border-box !important;
+  align-items: stretch !important;
+}
+
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+:is(zen-folder, tab-group) .tab-group-container
+tab:not([zen-essential], [zen-glance-tab="true"]) {
+  width: calc(var(--collapsed-tab-bar-width) - 5px) !important;
+  max-width: calc(var(--collapsed-tab-bar-width) - 5px) !important;
+  animation: none !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+:is(zen-folder, tab-group) .tab-group-container
+tab:not([zen-essential], [zen-glance-tab="true"]) .tab-content {
+  animation: none !important;
+  margin-inline: auto !important;
+  padding: 0 !important;
+  padding-inline: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: calc(var(--collapsed-tab-bar-width) - 5px - 2 * var(--tab-block-margin)) !important;
+  max-width: calc(var(--collapsed-tab-bar-width) - 5px - 2 * var(--tab-block-margin)) !important;
+  overflow: hidden !important;
+}
+
+/* ponytail: native tab-group — flat like top-level tabs (not zen-folder indent); beats vertical-split-tab-groups */
+#navigator-toolbox #zen-tabs-wrapper
+tab-group {
+  margin-inline: 0 !important;
+}
+
+#navigator-toolbox #zen-tabs-wrapper
+tab-group .tab-group-container {
+  padding: 0 !important;
+  margin-inline: 0 !important;
+  box-sizing: border-box !important;
+}
+
+#navigator-toolbox #zen-tabs-wrapper
+tab-group[split-view-group] .tab-group-container::after {
+  display: none !important;
+}
+
+#navigator-toolbox #zen-tabs-wrapper
+tab-group .tab-group-container tab:not([zen-essential], [zen-glance-tab="true"]) {
+  margin-inline-start: 0 !important;
+}
+
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
+#zen-tabs-wrapper
+tab-group .tab-group-container,
+#navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
+#zen-tabs-wrapper
+tab-group .tab-group-container {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
+#zen-tabs-wrapper
+tab-group .tab-group-container tab:not([zen-essential], [zen-glance-tab="true"]),
+#navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
+#zen-tabs-wrapper
+tab-group .tab-group-container tab:not([zen-essential], [zen-glance-tab="true"]) {
+  margin-inline-start: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+}
+
 /* Expanded: top-level normal tabs only — folder tabs keep eoh calc(expanded - 28px) indent */
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 vbox.zen-workspace-normal-tabs-section
 > tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]),
@@ -31,7 +112,7 @@ vbox.zen-workspace-normal-tabs-section
 }
 
 /* Expanded pinned — mimic zen-sidebar-expanded (clip-hover never sets that attr) */
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section,
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
@@ -45,32 +126,32 @@ vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section {
 }
 
 /* ponytail: folder pinned tabs — row .tab-group-container caused half-width squares on hover */
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container,
+:is(zen-folder, tab-group) .tab-group-container,
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
 #zen-tabs-wrapper
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container {
+:is(zen-folder, tab-group) .tab-group-container {
   display: flex !important;
   flex-direction: column !important;
   width: 100% !important;
   align-items: stretch !important;
 }
 
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 zen-workspace:not([collapsedpinnedtabs])
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
 zen-folder .tab-group-container
-tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]),
+tab:not([zen-essential], [zen-glance-tab="true"]),
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
 #zen-tabs-wrapper
 zen-workspace:not([collapsedpinnedtabs])
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
 zen-folder .tab-group-container
-tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) {
+tab:not([zen-essential], [zen-glance-tab="true"]) {
   margin-inline-start: var(--zen-folder-indent, 14px) !important;
   width: calc(100% - var(--zen-folder-indent, 14px)) !important;
   max-width: calc(100% - var(--zen-folder-indent, 14px)) !important;
@@ -79,23 +160,23 @@ tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) {
   box-sizing: border-box !important;
 }
 
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 zen-workspace:not([collapsedpinnedtabs])
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
 zen-folder .tab-group-container
-tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background,
+tab:not([zen-essential], [zen-glance-tab="true"]) .tab-background,
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
 #zen-tabs-wrapper
 zen-workspace:not([collapsedpinnedtabs])
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
 zen-folder .tab-group-container
-tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background {
+tab:not([zen-essential], [zen-glance-tab="true"]) .tab-background {
   width: -moz-available !important;
   max-width: 100% !important;
 }
 
-#navigator-toolbox:not([zen-right-side="true"]):is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:not([zen-right-side="true"]):is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section,
 #navigator-toolbox:not([zen-right-side="true"]):has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
@@ -105,7 +186,7 @@ vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section {
   margin-left: 0 !important;
 }
 
-#navigator-toolbox[zen-right-side="true"]:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox[zen-right-side="true"]:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section,
 #navigator-toolbox[zen-right-side="true"]:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
@@ -115,73 +196,73 @@ vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section {
   margin-right: 0 !important;
 }
 
-/* Expanded: folder indent — normal section; pinned section only when pins expanded */
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+/* Expanded: zen-folder indent — normal section; pinned section only when pins expanded */
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 vbox.zen-workspace-normal-tabs-section
-zen-folder .tab-group-container > tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]),
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+zen-folder .tab-group-container > tab:not([zen-essential], [zen-glance-tab="true"]),
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 vbox.zen-workspace-normal-tabs-section
-zen-folder .tab-group-container > zen-folder,
+zen-folder .tab-group-container > :is(zen-folder, tab-group),
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
 #zen-tabs-wrapper
 vbox.zen-workspace-normal-tabs-section
-zen-folder .tab-group-container > tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]),
+zen-folder .tab-group-container > tab:not([zen-essential], [zen-glance-tab="true"]),
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
 #zen-tabs-wrapper
 vbox.zen-workspace-normal-tabs-section
-zen-folder .tab-group-container > zen-folder,
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+zen-folder .tab-group-container > :is(zen-folder, tab-group),
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 zen-workspace:not([collapsedpinnedtabs])
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container > tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]),
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+zen-folder .tab-group-container > tab:not([zen-essential], [zen-glance-tab="true"]),
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 zen-workspace:not([collapsedpinnedtabs])
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container > zen-folder,
-#navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
-#zen-tabs-wrapper
-zen-workspace:not([collapsedpinnedtabs])
-vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container > tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]),
+zen-folder .tab-group-container > :is(zen-folder, tab-group),
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
 #zen-tabs-wrapper
 zen-workspace:not([collapsedpinnedtabs])
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container > zen-folder {
+zen-folder .tab-group-container > tab:not([zen-essential], [zen-glance-tab="true"]),
+#navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
+#zen-tabs-wrapper
+zen-workspace:not([collapsedpinnedtabs])
+vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
+zen-folder .tab-group-container > :is(zen-folder, tab-group) {
   margin-inline-start: var(--zen-folder-indent, 14px) !important;
   width: calc(100% - var(--zen-folder-indent, 14px)) !important;
   max-width: calc(100% - var(--zen-folder-indent, 14px)) !important;
   box-sizing: border-box !important;
 }
 
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 vbox.zen-workspace-normal-tabs-section
-zen-folder .tab-group-container > tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background,
+zen-folder .tab-group-container > tab:not([zen-essential], [zen-glance-tab="true"]) .tab-background,
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
 #zen-tabs-wrapper
 vbox.zen-workspace-normal-tabs-section
-zen-folder .tab-group-container > tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background,
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+zen-folder .tab-group-container > tab:not([zen-essential], [zen-glance-tab="true"]) .tab-background,
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 zen-workspace:not([collapsedpinnedtabs])
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container > tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background,
+zen-folder .tab-group-container > tab:not([zen-essential], [zen-glance-tab="true"]) .tab-background,
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
 #zen-tabs-wrapper
 zen-workspace:not([collapsedpinnedtabs])
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container > tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background {
+zen-folder .tab-group-container > tab:not([zen-essential], [zen-glance-tab="true"]) .tab-background {
   width: -moz-available !important;
   max-width: 100% !important;
 }
 
 /* Expanded: top-level pinned tabs only — folder tabs live inside padded .tab-group-container */
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
 > tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]),
@@ -197,13 +278,36 @@ vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
   align-self: stretch !important;
 }
 
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
+#zen-tabs-wrapper
+vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
+tab-group .tab-group-container tab:not([zen-essential], [zen-glance-tab="true"]),
+#navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
+#zen-tabs-wrapper
+vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
+tab-group .tab-group-container tab:not([zen-essential], [zen-glance-tab="true"]) {
+  animation: none !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  align-self: stretch !important;
+}
+
+/* ponytail: eoh clips tab-group containers in rail, not per-tab like zen-folder */
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+tab-group .tab-group-container {
+  clip-path: none !important;
+}
+
 /* Static tile geometry — immediate; stripes need clip-path !important */
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background,
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
-zen-folder .tab-group-container tab .tab-background {
+:is(zen-folder, tab-group) .tab-group-container tab .tab-background {
   clip-path: none !important;
   border-radius: var(--border-radius-medium) !important;
   width: -moz-available !important;
@@ -211,15 +315,25 @@ zen-folder .tab-group-container tab .tab-background {
   margin-inline: var(--tab-block-margin) !important;
 }
 
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#zen-tabs-wrapper
+vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
+:is(zen-folder, tab-group) .tab-group-container
+tab:not([zen-essential], [zen-glance-tab="true"]) .tab-background {
+  width: calc(var(--collapsed-tab-bar-width) - 5px - 2 * var(--tab-block-margin)) !important;
+  max-width: calc(var(--collapsed-tab-bar-width) - 5px - 2 * var(--tab-block-margin)) !important;
+  margin-inline: var(--tab-block-margin) !important;
+}
+
 /* ponytail: pinned tile cap — immediate static; stripe needs capped bg + overflow */
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
 tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) {
   overflow: hidden !important;
 }
 
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
 tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background {
@@ -229,7 +343,7 @@ tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-back
 }
 
 /* Expanded: drop hold bg animation — Zen owns selected/hover colors (not background: revert) */
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background,
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
@@ -241,7 +355,7 @@ tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-back
 }
 
 /* Expanded pinned bg — full row like zen-sidebar-expanded */
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
 tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background,
@@ -257,7 +371,7 @@ tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-back
 }
 
 /* Expanded pinned — row content + labels (native collapsed centers/hides these) */
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
 tab:not([zen-essential], [zen-glance-tab="true"]) .tab-content,
@@ -270,7 +384,7 @@ tab:not([zen-essential], [zen-glance-tab="true"]) .tab-content {
   padding-inline: var(--tab-inline-padding, 8px) !important;
 }
 
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
 tab:not([zen-essential], [zen-glance-tab="true"]) .tab-label-container,
@@ -283,11 +397,11 @@ tab:not([zen-essential], [zen-glance-tab="true"]) .tab-label-container {
 }
 
 /* Instant collapse: normal tab content centered in tile */
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 vbox.zen-workspace-normal-tabs-section
 tab:not([zen-essential], [zen-glance-tab="true"]) .tab-content,
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab:not([pinned], [zen-essential], [zen-glance-tab="true"]) .tab-content {
   animation: none !important;
@@ -302,7 +416,7 @@ tab:not([pinned], [zen-essential], [zen-glance-tab="true"]) .tab-content {
 }
 
 /* Instant collapse: pinned content centered in capped tile */
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
 tab:not([zen-essential], [zen-glance-tab="true"]) .tab-content {
@@ -318,7 +432,7 @@ tab:not([zen-essential], [zen-glance-tab="true"]) .tab-content {
   overflow: hidden !important;
 }
 
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 tab:not([zen-essential], [zen-glance-tab="true"]) .tab-content,
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
@@ -328,10 +442,10 @@ tab:not([zen-essential], [zen-glance-tab="true"]) .tab-content {
 }
 
 /* Instant collapse: icons + labels + chrome */
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab:not([zen-essential], [zen-glance-tab="true"]) .tab-icon-stack,
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab:not([zen-essential], [zen-glance-tab="true"]) .tab-icon-image {
   animation: none !important;
@@ -339,7 +453,7 @@ tab:not([zen-essential], [zen-glance-tab="true"]) .tab-icon-image {
   margin-inline: 0 !important;
 }
 
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab:not([zen-essential], [zen-glance-tab="true"]) .tab-label-container {
   animation: none !important;
@@ -347,23 +461,23 @@ tab:not([zen-essential], [zen-glance-tab="true"]) .tab-label-container {
   display: none !important;
 }
 
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab:not([zen-essential], [zen-glance-tab="true"]):not([pinned]) .tab-close-button,
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab:not([zen-essential], [zen-glance-tab="true"]) .tab-reset-button,
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 tab:not([zen-essential], [zen-glance-tab="true"]) .tab-reset-pin-button {
   animation: none !important;
   display: none !important;
 }
 
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 tab:not([zen-essential], [zen-glance-tab="true"]) .tab-icon-stack,
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 tab:not([zen-essential], [zen-glance-tab="true"]) .tab-icon-image,
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
@@ -375,7 +489,7 @@ tab:not([zen-essential], [zen-glance-tab="true"]) .tab-icon-image {
   animation: none;
 }
 
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 tab:not([zen-essential], [zen-glance-tab="true"]) .tab-label-container,
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
@@ -386,7 +500,7 @@ tab:not([zen-essential], [zen-glance-tab="true"]) .tab-label-container {
   display: flex;
 }
 
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 tab:not([zen-essential], [zen-glance-tab="true"]):not([pinned]) .tab-close-button,
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
@@ -396,7 +510,7 @@ tab:not([zen-essential], [zen-glance-tab="true"]):not([pinned]) .tab-close-butto
   display: unset;
 }
 
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 tab:not([zen-essential], [zen-glance-tab="true"]) .tab-reset-pin-button,
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
@@ -407,7 +521,7 @@ tab:not([zen-essential], [zen-glance-tab="true"]) .tab-reset-pin-button {
 }
 
 /* ponytail: reset Zen expanded absolute icon stack for all pinned tabs (not just zen-pinned-changed) */
-#navigator-toolbox:not(:hover, [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+#navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
 #zen-tabs-wrapper
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
 tab[pinned]:not([zen-essential]) > .tab-stack > .tab-content > .tab-icon-stack {
@@ -418,70 +532,70 @@ tab[pinned]:not([zen-essential]) > .tab-stack > .tab-content > .tab-icon-stack {
 }
 
 /* collapsedpinnedtabs + sidebar hover: flat pinned folder rows (beat eoh calc(expanded - 28px)) */
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 zen-workspace[collapsedpinnedtabs]
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container,
+:is(zen-folder, tab-group) .tab-group-container,
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
 #zen-tabs-wrapper
 zen-workspace[collapsedpinnedtabs]
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container {
+:is(zen-folder, tab-group) .tab-group-container {
   transform: translateX(0) !important;
   padding-inline: 0 !important;
 }
 
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 zen-workspace[collapsedpinnedtabs]
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container > zen-folder,
+:is(zen-folder, tab-group) .tab-group-container > :is(zen-folder, tab-group),
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
 #zen-tabs-wrapper
 zen-workspace[collapsedpinnedtabs]
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container > zen-folder {
+:is(zen-folder, tab-group) .tab-group-container > :is(zen-folder, tab-group) {
   margin-inline-start: 0 !important;
   width: 100% !important;
   max-width: none !important;
 }
 
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 zen-workspace[collapsedpinnedtabs]
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container
-tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]),
+:is(zen-folder, tab-group) .tab-group-container
+tab:not([zen-essential], [zen-glance-tab="true"]),
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
 #zen-tabs-wrapper
 zen-workspace[collapsedpinnedtabs]
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container
-tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) {
+:is(zen-folder, tab-group) .tab-group-container
+tab:not([zen-essential], [zen-glance-tab="true"]) {
   margin-inline-start: 0 !important;
   width: 100% !important;
   max-width: none !important;
 }
 
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 #zen-tabs-wrapper
 zen-workspace[collapsedpinnedtabs]
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container
-tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background,
+:is(zen-folder, tab-group) .tab-group-container
+tab:not([zen-essential], [zen-glance-tab="true"]) .tab-background,
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
 #zen-tabs-wrapper
 zen-workspace[collapsedpinnedtabs]
 vbox.zen-workspace-tabs-section.zen-workspace-pinned-tabs-section
-zen-folder .tab-group-container
-tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-background {
+:is(zen-folder, tab-group) .tab-group-container
+tab:not([zen-essential], [zen-glance-tab="true"]) .tab-background {
   width: -moz-available !important;
   max-width: 100% !important;
 }
 
 /* Expanded: workspace pseudo-tab — match tab row inset (eoh: full arrowscrollbox width + collapsed padding) */
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 .zen-current-workspace-indicator,
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
 .zen-current-workspace-indicator {
@@ -495,7 +609,7 @@ tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-back
   padding-inline-end: 12px !important;
 }
 
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 .zen-current-workspace-indicator::before,
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
 .zen-current-workspace-indicator::before {
@@ -503,7 +617,7 @@ tab:not([zen-essential], [split-view="true"], [zen-glance-tab="true"]) .tab-back
   width: 100% !important;
 }
 
-#navigator-toolbox:is(:hover, [has-popup-menu="true"], [movingtab], [flash-popup])
+#navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])
 .zen-current-workspace-indicator .zen-workspaces-actions image,
 #navigator-toolbox:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button))
 .zen-current-workspace-indicator .zen-workspaces-actions image {
