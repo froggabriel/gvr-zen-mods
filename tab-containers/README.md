@@ -13,6 +13,7 @@ Companion for `zen-sidebar-expand-on-hover`, which clips non-essential tab backg
 - Rounded tile backgrounds on pinned and normal workspace tabs in collapsed rail
 - Tile sizing and margins match essentials
 - Favicons centered within each tile
+- Playing-audio tabs: mute hidden in collapsed rail by default (favicon stays centered); optional pref for top-right speaker overlay
 - Container identity stripes on tile edges
 - Tab width eases with sidebar collapse (expand-on-hover delay + duration)
 - Tab close button hidden in collapsed rail (returns when the sidebar expands on hover)

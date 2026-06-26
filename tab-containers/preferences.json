@@ -1,0 +1,8 @@
+[
+  {
+    "property": "mod.gvr-tab-containers.show_audio_in_rail",
+    "label": "Show mute button on playing tabs in collapsed rail",
+    "type": "checkbox",
+    "defaultValue": false
+  }
+]

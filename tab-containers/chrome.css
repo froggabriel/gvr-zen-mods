@@ -1,4 +1,4 @@
-/* tab-containers v1.0.63 — tile geometry; folder indent scoped by section */
+/* tab-containers v1.0.65 — tile geometry; folder indent scoped by section */
 
 /* ponytail: shared transition for collapsed↔expanded bg handoff */
 #navigator-toolbox #zen-tabs-wrapper
@@ -472,6 +472,43 @@ tab:not([zen-essential], [zen-glance-tab="true"]) .tab-reset-button,
 tab:not([zen-essential], [zen-glance-tab="true"]) .tab-reset-pin-button {
   animation: none !important;
   display: none !important;
+}
+
+/* Collapsed rail audio — default: drop from flex so favicon stays centered (eoh only opacity:0) */
+@media not (-moz-bool-pref: "mod.gvr-tab-containers.show_audio_in_rail") {
+  #navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+  #zen-tabs-wrapper
+  tab:not([zen-essential], [zen-glance-tab="true"]) .tab-audio-button {
+    display: none !important;
+  }
+}
+
+/* Optional: native-style speaker overlay (mute without expanding sidebar) */
+@media (-moz-bool-pref: "mod.gvr-tab-containers.show_audio_in_rail") {
+  #navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+  #zen-tabs-wrapper
+  tab:not([zen-essential], [zen-glance-tab="true"]) .tab-content {
+    position: relative !important;
+    z-index: 2 !important;
+  }
+  #navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+  #zen-tabs-wrapper
+  tab:not([zen-essential], [zen-glance-tab="true"]) .tab-audio-button {
+    display: flex !important;
+    opacity: 1 !important;
+    position: absolute !important;
+    top: 1px !important;
+    inset-inline-end: calc(var(--rail-stripe-width, 3px) + 1px) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 3 !important;
+    width: 14px !important;
+    height: 14px !important;
+    min-width: 14px !important;
+    min-height: 14px !important;
+    --toolbarbutton-inner-padding: 0 !important;
+    pointer-events: auto !important;
+  }
 }
 
 #navigator-toolbox:is(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup])

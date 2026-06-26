@@ -14,7 +14,7 @@ MODS = [
     {"id": "pin-align", "files": ["chrome.css"]},
     {"id": "active-first", "files": ["chrome.css", "preferences.json"]},
     {"id": "essentials-bottom", "files": ["chrome.css"]},
-    {"id": "tab-containers", "files": ["chrome.css"]},
+    {"id": "tab-containers", "files": ["chrome.css", "preferences.json"]},
     {"id": "rail-selected-ring", "files": ["chrome.css", "preferences.json"]},
 ]
 
