@@ -1,4 +1,4 @@
-/* tab-containers v1.0.65 — tile geometry; folder indent scoped by section */
+/* tab-containers v1.0.68 — tile geometry; folder indent scoped by section */
 
 /* ponytail: shared transition for collapsed↔expanded bg handoff */
 #navigator-toolbox #zen-tabs-wrapper
@@ -487,18 +487,24 @@ tab:not([zen-essential], [zen-glance-tab="true"]) .tab-reset-pin-button {
 @media (-moz-bool-pref: "mod.gvr-tab-containers.show_audio_in_rail") {
   #navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
   #zen-tabs-wrapper
-  tab:not([zen-essential], [zen-glance-tab="true"]) .tab-content {
+  tab[soundplaying]:not([zen-essential], [zen-glance-tab="true"]) .tab-content {
     position: relative !important;
     z-index: 2 !important;
   }
   #navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
   #zen-tabs-wrapper
-  tab:not([zen-essential], [zen-glance-tab="true"]) .tab-audio-button {
+  tab:not([soundplaying], [zen-essential], [zen-glance-tab="true"]) .tab-audio-button {
+    display: none !important;
+  }
+  #navigator-toolbox:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+  #zen-tabs-wrapper
+  tab[soundplaying]:not([zen-essential], [zen-glance-tab="true"]) .tab-audio-button {
     display: flex !important;
     opacity: 1 !important;
     position: absolute !important;
     top: 1px !important;
     inset-inline-end: calc(var(--rail-stripe-width, 3px) + 1px) !important;
+    inset-inline-start: auto !important;
     margin: 0 !important;
     padding: 0 !important;
     z-index: 3 !important;
@@ -508,6 +514,20 @@ tab:not([zen-essential], [zen-glance-tab="true"]) .tab-reset-pin-button {
     min-height: 14px !important;
     --toolbarbutton-inner-padding: 0 !important;
     pointer-events: auto !important;
+  }
+  /* Identity stripe on right (right-sided sidebar) — mirror speaker to inner edge */
+  #navigator-toolbox[zen-right-side="true"]:not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+  #zen-tabs-wrapper
+  tab[soundplaying]:not([zen-essential], [zen-glance-tab="true"]) .tab-audio-button {
+    inset-inline-start: calc(var(--rail-stripe-width, 3px) + 1px) !important;
+    inset-inline-end: auto !important;
+  }
+  /* Left sidebar containers: native .tab-context-line on right fights top-right speaker */
+  #navigator-toolbox:not([zen-right-side="true"]):not(:hover, [zen-has-hover="true"], [has-popup-menu="true"], [movingtab], [flash-popup]):not(:has(#urlbar[open], toolbarbutton[open="true"]:not(#zen-sidepanel-button)))
+  #zen-tabs-wrapper
+  tab[usercontextid][soundplaying]:not([zen-essential], [zen-glance-tab="true"]) .tab-context-line {
+    opacity: 0 !important;
+    pointer-events: none !important;
   }
 }
 

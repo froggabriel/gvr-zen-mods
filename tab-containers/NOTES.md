@@ -41,6 +41,10 @@ Full iteration log lives in pre-squash history — do not replay dead ends here.
 - Pinned collapsed: icon-stack reset for all `tab[pinned]`; immediate pinned `.tab-background` cap
 - **v1.0.51+:** instant collapse — labels `display:none` on unhover (no hold window); user accepts stripe snap
 
+**v1.0.68:** drop speaker pill bg (stripe conflict already handled via `.tab-context-line` hide).
+
+**v1.0.67:** scope audio overlay to `[soundplaying]` only — fixes ghost squares on idle tabs.
+
 **v1.0.65:** collapsed rail audio — default `display:none` on `.tab-audio-button` (eoh only `opacity:0`, still shifts favicon); pref `mod.gvr-tab-containers.show_audio_in_rail` for top-right speaker overlay above rail-selected-ring stripes.
 
 **v1.0.58:** folder indent scoped by section (`normal` vs `pinned:not([collapsedpinnedtabs])`); hide `.tab-reset-pin-button` in collapsed rail (drifted-pin favicon shift).
